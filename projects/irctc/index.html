@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IRCTC — Shivam">
+<meta property="og:description" content="Redesigning IRCTC Rail Connect to refine the train booking journey and resolve the usability issues that push people onto third-party apps.">
+<title>IRCTC — Shivam</title>
+<meta name="description" content="Redesigning IRCTC Rail Connect to refine the train booking journey and resolve the usability issues that push people onto third-party apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Geist:wght@300;400;500;600;700&family=Montserrat:wght@700&family=Saira:ital,wght@0,300;0,400;0,500;0,600;1,700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../assets/shell.css">
+<link rel="stylesheet" href="../../assets/irctc.css">
+</head>
+<body>
+
+<div class="page">
+  <div class="gridrules" aria-hidden="true"></div>
+  <div class="grid-h" aria-hidden="true"></div>
+  <div class="grid-v" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="col nav__in">
+      <a class="nav__brand brandmark" id="navLogo" href="../../" aria-label="Shivam — home"></a>
+      <a class="nav__work" href="../../work/">work</a>
+      <a class="btn nav__cta" href="mailto:shivamnegi5128@gmail.com">
+        <span class="btn__shine" aria-hidden="true"></span>
+        <span class="btn__label">Contact</span>
+        <span class="btn__ico" aria-hidden="true">
+          <svg class="i-default" viewBox="0 0 4.66863 7.74047" fill="none"><path d="M4.43436 3.30513L1.36573 0.235968C0.861783 -0.268072 0 0.0888458 0 0.801603V6.93886C0 7.65155 0.861644 8.0085 1.36564 7.5046L4.43427 4.4365C4.74671 4.12411 4.74676 3.61758 4.43436 3.30513Z" fill="white"/></svg>
+          <svg class="i-hover" viewBox="0 0 4.14214 4.15044" fill="none"><path d="M0 2.07522C0 3.92026 2.23065 4.84434 3.53541 3.53981C4.34428 2.73108 4.34439 1.41975 3.53566 0.610882C2.23101 -0.693994 0 0.230008 0 2.07522Z" fill="white"/></svg>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  
+
+<!-- ==========================================================================
+     IRCTC Rail Connect — a redesign.
+     Figma › IRCTC project (4238:5842), 1440 × 14369. Section positions are
+     the design's own; each margin-top in the stylesheet is the gap the file
+     leaves above that section, so the page keeps the frame's rhythm without
+     any absolute offsets.
+     ========================================================================== -->
+<main class="irc" data-grid-snap=".irc__h, .irc__lede p, .irc__overview-main p, .irc__close-in p, .irc__row-key b, .irc__row-txt, .irc__note b, .irc__note p, .irc__spacing, .irc__ann p, .irc__who, .irc__persona-body h4, .irc__persona-body p, .irc__persona-body li">
+
+  <!-- y 123 · 960 × 524 -->
+  <!-- Before and after, stacked the way the design stacks them: the live app
+       underneath, the redesign on top of it, and a wipe between the two. The
+       two screens are separate layers over one stage — nothing is flattened —
+       so the divider can cut the picture at any point without either screen
+       moving a pixel. -->
+  <section class="col irc__hero" data-irc-wipe
+           aria-label="Before and after: the live IRCTC app and the redesign">
+    <div class="irc__shot irc__shot--old">
+      <img data-slot="old-screen" class="ph" style="--h:100%" src="../../assets/media/139b17058863.webp" alt="">
+    </div>
+    <div class="irc__layer">
+      <div class="irc__shot irc__shot--new">
+        <img data-slot="new-screen" class="ph" style="--h:100%" src="../../assets/media/e2492e513e7b.webp" alt="">
+      </div>
+    </div>
+    <div class="irc__bar" aria-hidden="true"></div>
+    <button class="irc__handle" type="button"
+            role="slider" aria-label="Reveal the live app"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <svg viewBox="0 0 19 21" fill="none" aria-hidden="true"><path d="M6.64505 9.81463L12.2718 3.83621C12.8925 3.17676 14 3.61599 14 4.52158V16.4784C14 17.384 12.8925 17.8232 12.2718 17.1638L6.64505 11.1854C6.28265 10.8003 6.28265 10.1997 6.64505 9.81463Z" fill="#3C3C3C"/></svg>
+      <svg viewBox="0 0 19 21" fill="none" aria-hidden="true"><path d="M6.64505 9.81463L12.2718 3.83621C12.8925 3.17676 14 3.61599 14 4.52158V16.4784C14 17.384 12.8925 17.8232 12.2718 17.1638L6.64505 11.1854C6.28265 10.8003 6.28265 10.1997 6.64505 9.81463Z" fill="#3C3C3C"/></svg>
+    </button>
+  </section>
+
+  <!-- y 708 -->
+  <h2 class="col band">Overview</h2>
+
+  <!-- y 767 · 900 × 401 -->
+  <section class="col irc__overview">
+    <div class="irc__overview-main">
+      <p class="irc__h">Redesigning IRCTC Rail Connect to refine the train booking journey and
+         resolve usability issues</p>
+      <div>
+        <p>The Indian Railway Catering and Tourism Corporation's (IRCTC) Rail Connect mobile app
+           is the preferred method for purchasing train tickets in India. It is one of the most
+           transacted websites in Asia - Pacific with a transaction volume of over 25 million per
+           month and 5.5 mn logins per day. On an average 12.38 lakhs tickets were sold daily
+           through IRCTC's website and mobile app during FY 2023-24</p>
+        <p class="irc__gap" aria-hidden="true"></p>
+        <p>But despite all of its features, a lot of customers choose to use third-party apps
+           instead of the official app because they don't like the poor user experience. Realising
+           this, I made the decision to address these issues with a redesign that would improve
+           usability and the user experience in general. My objective was to design an interface
+           that would satisfy the needs of contemporary users by being more smooth and
+           intuitive.</p>
+      </div>
+    </div>
+    <div class="irc__facts">
+      <div class="irc__facts-in">
+        <div class="irc__fact"><b>UX.UI designer</b><span>Role</span></div>
+        <div class="irc__fact"><b>User experience, usability</b><span>Focus</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- y 1248 · 960 × 479 — the booking flow, with the design's two drawn arrows -->
+  <section class="col irc__fit irc__plate">
+    <div class="irc__win irc__flow-img irc__reveal">
+      <img data-slot="image35" class="ph" style="--h:447px" src="../../assets/media/0d80c94641fe.webp" alt="">
+    </div>
+    <svg class="irc__arrow irc__arrow--1" viewBox="0 0 214.922 49.7418" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M16.019 47.3034C16.6469 46.9698 17.6647 47.0806 18.2669 47.0806C22.9718 47.0806 27.6791 47.3283 32.3832 47.4148C44.7472 47.6421 57.1495 46.9645 69.5025 47.6654C79.9783 48.2597 90.5271 48.4225 101.02 48.2918C106.173 48.2277 111.088 47.1171 116.184 46.4403C121.051 45.7939 125.836 45.3123 130.72 44.9924C135.14 44.7029 139.375 43.5686 143.834 43.5446C150.69 43.5077 157.547 43.5446 164.403 43.5446C173.395 43.5446 182.386 43.5446 191.378 43.5446C194.716 43.5446 198.186 43.874 201.499 43.2801C202.944 43.021 204.86 43.094 206.193 42.3613C212.762 38.7493 213.507 30.3304 213.507 22.6902C213.507 18.4952 213.554 14.2972 213.402 10.1051C213.322 7.8699 213.382 4.15598 211.935 2.37868C211.186 1.45829 209.772 1.5966 208.825 1.613C204.031 1.69605 199.253 2.21087 194.453 2.22555C183.784 2.25816 173.062 2.10275 162.4 1.68261C153.197 1.31996 144.025 1.40664 134.819 1.44594C126.619 1.48095 118.416 1.564 110.221 1.94712C104.665 2.20684 99.1715 2.94224 93.6353 3.47848C87.5396 4.06892 81.4168 4.14387 75.3144 4.67573C68.6432 5.25716 61.927 4.47498 55.2464 4.45299C46.1014 4.42287 37.0195 4.11092 27.8874 3.74299C24.9133 3.62316 21.9298 3.70123 18.9541 3.70123C17.3192 3.70123 15.8095 4.44739 14.2952 5.12122C11.252 6.47542 7.69225 8.34915 5.94425 11.8314C4.04831 15.6083 2.75198 19.8502 2.08906 24.1658C1.73733 26.4556 1.28753 28.8387 1.43682 31.1823C1.55399 33.0216 1.98807 34.8387 2.29871 36.6395C2.7333 39.1589 3.46696 40.6893 4.97754 42.4587C6.85673 44.6599 8.68304 44.3407 11.034 44.9367C12.58 45.3287 14.0759 46.0963 15.5997 46.5516" stroke="#0054CC" stroke-width="2.81557" stroke-linecap="round"/></svg>
+    <svg class="irc__arrow irc__arrow--2" viewBox="0 0 225.245 46.9262" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M16.7301 44.5445C17.3886 44.2293 18.4559 44.334 19.0874 44.334C24.0213 44.334 32.2726 42.279 37.2057 42.3608C50.1715 42.5756 59.8625 44.2242 72.8168 44.8865C83.8024 45.4482 94.8647 45.6019 105.868 45.4785C111.272 45.4179 116.426 44.3684 121.77 43.7289C126.874 43.1181 131.893 42.663 137.014 42.3608C141.649 42.0872 146.09 41.0153 150.766 40.9927C157.956 40.9578 165.147 40.9927 172.336 40.9927C181.766 40.9927 191.195 40.9927 200.624 40.9927C204.125 40.9927 207.764 41.304 211.238 40.7427C212.753 40.4979 214.763 40.5668 216.16 39.8745C223.049 36.4614 223.831 28.506 223.831 21.2865C223.831 17.3225 223.879 13.3557 223.721 9.39441C223.636 7.28226 221.131 4.21061 219.614 2.53118C218.829 1.66147 202.764 1.93686 201.771 1.95236C196.744 2.03084 191.734 2.51731 186.699 2.53118C175.512 2.562 181.417 1.83266 170.236 1.43565C160.585 1.09297 151.049 4.01657 141.395 4.0537C132.796 4.08678 124.111 1.32357 115.517 1.6856C109.691 1.93102 103.93 2.62593 98.1242 3.13265C91.7318 3.69057 85.311 3.7614 78.9115 4.26397C71.9157 4.81339 64.8726 4.07428 57.8668 4.05349C48.2767 4.02504 38.7527 3.73026 29.1762 3.38259C26.0573 3.26936 25.9001 4.68493 22.7795 4.68493C21.0651 4.68493 16.5104 4.0482 14.9224 4.68493C11.7311 5.96457 7.99806 7.73513 6.16498 11.0256C4.17677 14.5946 2.81734 18.603 2.12215 22.6809C1.75331 24.8446 1.2816 27.0964 1.43817 29.311C1.56104 31.0491 2.01625 32.7662 2.342 34.4678C2.79775 36.8485 3.56712 38.2945 5.15122 39.9666C7.12187 42.0466 9.03707 41.7449 11.5025 42.3081C13.1237 42.6785 14.6924 43.4039 16.2904 43.8341" stroke="#0054CC" stroke-width="2.81557" stroke-linecap="round"/></svg>
+  </section>
+
+  <!-- y 1833 -->
+  <h2 class="col band">Research</h2>
+
+  <!-- y 1892 · 602 × 377 -->
+  <section class="col irc__lede irc__lede--research">
+    <p class="irc__h">The Starting Point - Putting Users at the<br>center my work</p>
+    <div>
+      <p>To gain a comprehensive understanding and gather valuable insights about the IRCTC Mobile
+         App, I conducted user research. I started by reaching out to friends, relatives, and
+         professors who regularly travel by train to share their experiences with the app.
+         Additionally, I sought feedback from my father, who, through his work in the Railway
+         Protection Force (RPF), has a deep connection with the railways, offering unique insights
+         into the app's functionality.</p>
+      <p class="irc__gap" aria-hidden="true"></p>
+      <p>However, to broaden my perspective, I placed significant emphasis on analyzing user
+         reviews from Google Play and the Apple App Store. These reviews provided a wealth of
+         feedback directly from the app's users, highlighting common pain points, suggestions for
+         improvements, and general sentiment. The insights gathered from these reviews were
+         invaluable in understanding the real-world challenges users face when interacting with
+         the app.</p>
+    </div>
+  </section>
+
+  <!-- y 2343 · 960 × 479 — the store reviews -->
+  <section class="col irc__fit irc__plate">
+    <div class="irc__win irc__reviews-img irc__reveal">
+      <img data-slot="reviews" class="ph" style="--h:447px" src="../../assets/media/0bf0f62adf38.webp" alt="">
+    </div>
+  </section>
+
+  <!-- y 2957 · 619 × 188 -->
+  <section class="col irc__lede irc__lede--pains">
+    <p class="irc__h">Among the most common pain locations<br>are:</p>
+    <p>The login and signup pages are among the most crucial aspects of any app, including the
+       IRCTC Mobile App. These pages are the first point of interaction for many users and set the
+       tone for their overall experience with the app. A poor login and signup process can
+       significantly impact user retention and satisfaction.</p>
+  </section>
+
+  <!-- y 3228 · 960 × 2039 — six screens of the live app, each with its note -->
+  <section class="col irc__fit irc__pains">
+    <div class="irc__shot irc__reveal irc__pain--1" style="left:31px; top:31px">
+      <img data-slot="pain-1" class="ph" style="--h:100%" src="../../assets/media/f4c96bbc0d8b.webp" alt="">
+    </div>
+    <div class="irc__note irc__note--ms" style="left:308px; top:59px; width:217px">
+      <b>Clutter &amp; no hierarchy</b>
+      <p>A cluttered design, combined with the inconvenience of CAPTCHAs.</p>
+    </div>
+    <div class="irc__shot irc__reveal irc__pain--2" style="left:685px; top:31px">
+      <img data-slot="pain-2" class="ph" style="--h:100%" src="../../assets/media/b46fd3c0e5cd.webp" alt="">
+    </div>
+    <div class="irc__note" style="left:386px; top:355px; width:249px">
+      <b>Complicated login process</b>
+      <p>User frustration is increased by the call-to-action buttons' ineffectiveness and the
+         design layout's poor organisation.</p>
+    </div>
+    <p class="irc__spacing" style="position:absolute; left:31px; top:634px; width:700px">
+       Insufficient negative space, especially in confined spaces, can cause eye stress and
+       cognitive strain.</p>
+    <div class="irc__shot irc__reveal irc__pain--3" style="left:31px; top:799px">
+      <img data-slot="pain-3" class="ph" style="--h:100%" src="../../assets/media/139b17058863.webp" alt="">
+    </div>
+    <div class="irc__shot irc__reveal irc__pain--4" style="left:685px; top:799px; border-radius:36px">
+      <img data-slot="pain-4" class="ph" style="--h:100%" src="../../assets/media/7beecf1cbf6b.webp" alt="">
+    </div>
+    <div class="irc__note" style="left:300px; top:818px; width:333px">
+      <b>Congested Spacing</b>
+      <p>The crowded spacing in the app's interface makes it challenging for users to effectively
+         navigate and interact with elements.</p>
+    </div>
+    <div class="irc__note" style="left:365px; top:1147px; white-space:nowrap">
+      <b>Confusing reservation procedure</b>
+      <p>Difficult to locate main features<br>because of unintuitive structure</p>
+    </div>
+    <div class="irc__shot irc__reveal irc__pain--5" style="left:31px; top:1495px; border-radius:36px">
+      <img data-slot="pain-5" class="ph" style="--h:100%" src="../../assets/media/37d79832cb03.webp" alt="">
+    </div>
+    <div class="irc__shot irc__reveal irc__pain--6" style="left:685px; top:1495px; border-radius:36px">
+      <img data-slot="pain-6" class="ph" style="--h:100%" src="../../assets/media/139b17058863.webp" alt="">
+    </div>
+    <div class="irc__note" style="left:300px; top:1517px; width:323px">
+      <b style="white-space:nowrap">Recall over recognition</b>
+      <p>The calendar in the existing app allows users to select a date, but it feels stiff and
+         confusing. In order to change their selected date, users must navigate back to the
+         previous screen, which adds extra steps and disrupts the booking process.</p>
+    </div>
+    <div class="irc__note" style="left:402.5px; top:1841px; white-space:nowrap">
+      <b>Unsorted</b>
+      <p>The overall feel of the app looks<br>unorganised.</p>
+    </div>
+  </section>
+
+  <!-- y 5373 -->
+  <h2 class="col band">Key takeaways</h2>
+
+  <!-- y 5478 · 899 × 434 — four bars, 46 apart -->
+  <section class="col irc__takeaways">
+    <div class="irc__row irc__row--1">
+      <div class="irc__row-key"><b style="top:calc(50% - 10px)">Inconsistent Navigation</b></div>
+      <p class="irc__row-txt" style="top:calc(50% - 21px)">Users face challenges as a result of
+         irregular screen layouts and nonstandard navigation elements.</p>
+    </div>
+    <div class="irc__row">
+      <div class="irc__row-key"><b style="top:calc(50% - 21px)">Overwhelming Information<br>Density</b></div>
+      <p class="irc__row-txt" style="top:calc(50% - 31px)">The application presents an excessive
+         amount of information at once, which confuses users and makes it difficult for them to
+         locate pertinent details.</p>
+    </div>
+    <div class="irc__row">
+      <div class="irc__row-key"><b style="top:calc(50% - 10px)">Edit Passenger Info</b></div>
+      <p class="irc__row-txt" style="top:calc(50% - 21px)">Editing passenger information is not
+         possible from the "Review and Pay" screen.</p>
+    </div>
+    <div class="irc__row">
+      <div class="irc__row-key"><b style="top:calc(50% - 10px)">Recognition Difficulties</b></div>
+      <p class="irc__row-txt" style="top:calc(50% - 31px)">Rather than making it simple for users
+         to recognise and modify their previous selections, the current design makes them recall
+         them.</p>
+    </div>
+  </section>
+
+  <!-- y 6018 -->
+  <h2 class="col band">Define</h2>
+
+  <!-- y 6108 · 960 × 479 — the persona, all of it type in the file and type here -->
+  <section class="col irc__fit irc__persona">
+    <article class="irc__card">
+      <div class="irc__win irc__avatar">
+        <img data-slot="persona" class="ph" style="--h:127px" src="../../assets/media/3ef699f1a8b0.webp" alt="">
+      </div>
+      <p class="irc__who">29, India<br>IT Manager</p>
+      <div class="irc__persona-body">
+        <div class="irc__grp">
+          <h4>Gautam</h4>
+          <p>Gautam is a busy IT professional who travels a lot, both for business and pleasure.<br>
+             He appreciates apps that provide a smooth user experience and expedite the<br>
+             booking process because he has a busy schedule.</p>
+        </div>
+        <div class="irc__cols">
+          <div class="irc__grp">
+            <h4>Motivations</h4>
+            <ul style="white-space:nowrap">
+              <li>Convenience</li>
+              <li>Simplicity</li>
+              <li>Efficiency</li>
+              <li>Budget friendly</li>
+            </ul>
+          </div>
+          <div class="irc__grp">
+            <h4>Goals</h4>
+            <ul>
+              <li>Travel to different cities and meet different people from different states.</li>
+              <li>Wants to book tickets without and difficulty</li>
+              <li>Easily view and manage travel itinararies</li>
+            </ul>
+          </div>
+        </div>
+        <div class="irc__grp">
+          <h4>Frustrations</h4>
+          <ul>
+            <li>Gets easily frustrated if the interface is difficult to use and looks messy</li>
+            <li>Use the IRCTC app mostly even though thinks that the app is super confusing but
+                use it anyway because its the official app.</li>
+            <li>Gets frustrated if someone wants him to book a ticket</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- y 6663 -->
+  <h2 class="col band">Design</h2>
+
+  <!-- y 6737 · 601 × 122 -->
+  <section class="col irc__lede irc__lede--design">
+    <p class="irc__h">Clear, Sharp &amp; Minimal</p>
+    <p>I made these low-fidelity wireframes, which are layout and functionality-focused,<br>
+       serve as a visual manual that lays out the key components and user flow of the app.</p>
+  </section>
+
+  <!-- y 6948 · 960 × 584 — eight wireframes, several running off the panel's
+       edges as they do in the file, under the design's own vignette -->
+  <section class="col irc__fit irc__wires">
+    <img data-slot="wf-1" class="irc__wf irc__wf--1" src="../../assets/media/db4450ce4344.webp" alt="">
+    <img data-slot="wf-2" class="irc__wf irc__wf--2" src="../../assets/media/6733aaa3128a.webp" alt="">
+    <img data-slot="wf-3" class="irc__wf irc__wf--3" src="../../assets/media/29b462bd2255.webp" alt="">
+    <img data-slot="wf-4" class="irc__wf irc__wf--4" src="../../assets/media/7d374f917901.webp" alt="">
+    <img data-slot="wf-5" class="irc__wf irc__wf--5" src="../../assets/media/616fa1032705.webp" alt="">
+    <img data-slot="wf-6" class="irc__wf irc__wf--6" src="../../assets/media/d5dfc994710f.webp" alt="">
+    <img data-slot="wf-7" class="irc__wf irc__wf--7" src="../../assets/media/ee7db08f80b3.webp" alt="">
+    <img data-slot="wf-8" class="irc__wf irc__wf--8" src="../../assets/media/72e7d6f9d8b0.webp" alt="">
+    <div class="irc__veil" aria-hidden="true"><div class="irc__veil-blur"></div><div class="irc__veil-tint"></div></div>
+  </section>
+
+  <!-- y 7668 -->
+  <h2 class="col band">Final UI</h2>
+
+  <!-- y 7788 · 960 × 5234 — nine screens and the notes against them -->
+  <section class="col irc__fit irc__final">
+    <img data-slot="ui-login" class="irc__screen irc__screen--login irc__reveal" src="../../assets/media/19b239198c83.webp" alt="">
+    <div class="irc__ann irc__ann--a"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>A simple login screen without any visual clutter and the inconvenience of captcha's</p></div>
+    <div class="irc__ann irc__ann--b"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Easily located CTA's</p></div>
+    <div class="irc__ann irc__ann--c"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Simplified the signup process by adding a progress bar to show completion status.</p></div>
+
+    <img data-slot="ui-reg1" class="irc__screen irc__screen--reg1 irc__reveal" src="../../assets/media/afdd327372b1.webp" alt="">
+    <img data-slot="ui-reg2" class="irc__screen irc__screen--reg2 irc__reveal" src="../../assets/media/92bf4a681cb7.webp" alt="">
+    <img data-slot="ui-reg3" class="irc__screen irc__screen--reg3 irc__reveal" src="../../assets/media/a164c3b7e887.webp" alt="">
+
+    <div class="irc__ann irc__ann--d"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Notification: for every update and search: to allows users to search any service they want.</p></div>
+    <div class="irc__ann irc__ann--e"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Provided the option to search for trains and select date and departure right on the home screen</p></div>
+    <img data-slot="ui-home" class="irc__screen irc__screen--home irc__reveal" src="../../assets/media/285083133ba5.webp" alt="">
+
+    <img data-slot="ui-listing" class="irc__screen irc__screen--listing irc__reveal" src="../../assets/media/334337713269.webp" alt="">
+    <div class="irc__ann irc__ann--f"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Date sliders provide a clear and intuitive visual representation of the timeline, making it easier for users to understand the range and context of dates they are selecting.</p></div>
+    <div class="irc__ann irc__ann--g"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>I provided ample spacing for the content to prevent it from feeling cluttered.</p></div>
+    <div class="irc__ann irc__ann--h"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>The addition of tags ( fasterst, cheapest etc) allows users to make a guided decision.</p></div>
+
+    <div class="irc__ann irc__ann--i"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Easy to understand input field to change the boarding station</p></div>
+    <div class="irc__ann irc__ann--j"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Users can easily Add, Delete and Edit passengers details</p></div>
+    <img data-slot="ui-passenger" class="irc__screen irc__screen--passenger irc__reveal" src="../../assets/media/fd802736a20d.webp" alt="">
+
+    <img data-slot="ui-payment" class="irc__screen irc__screen--payment irc__reveal" src="../../assets/media/401cbe041945.webp" alt="">
+    <div class="irc__ann irc__ann--k"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Easily select payment method by just switching to different modes.</p></div>
+    <div class="irc__ann irc__ann--l"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Emphasis is placed on the total amount due in order to make the fare clear.</p></div>
+
+    <div class="irc__ann irc__ann--m"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4" fill="#00FF1E"/></svg><p>Clear confirmation message</p></div>
+    <img data-slot="ui-confirmed" class="irc__screen irc__screen--confirmed irc__reveal" src="../../assets/media/58d847855eec.webp" alt="">
+  </section>
+
+  <!-- y 13113 -->
+  <h2 class="col band">Design system</h2>
+
+  <!-- y 13203 · 960 × 513 -->
+  <section class="col irc__fit irc__ds">
+    <div class="irc__win irc__ds-colors"><img data-slot="ds-colors" class="ph" style="--h:123px" src="../../assets/media/53119dff202d.webp" alt=""></div>
+    <div class="irc__win irc__ds-icons"><img data-slot="ds-icons" class="ph" style="--h:226px" src="../../assets/media/aae404b44768.webp" alt=""></div>
+    <div class="irc__win irc__ds-type"><img data-slot="ds-typography" class="ph" style="--h:449px" src="../../assets/media/436977d9dc83.webp" alt=""></div>
+    <div class="irc__win irc__ds-buttons"><img data-slot="ds-buttons" class="ph" style="--h:297px" src="../../assets/media/80ab477a8437.webp" alt=""></div>
+    <div class="irc__win irc__ds-fields"><img data-slot="ds-textfields" class="ph" style="--h:651px" src="../../assets/media/505fe562bb98.webp" alt=""></div>
+    <div class="irc__veil" aria-hidden="true"><div class="irc__veil-blur"></div><div class="irc__veil-tint"></div></div>
+  </section>
+
+  <!-- y 13803 -->
+  <h2 class="col band">Key takeaway</h2>
+
+  <!-- y 13876 · 601 × 147, and the sticker floating beside it -->
+  <section class="col irc__close">
+    <div class="irc__close-in">
+      <p>This redesign helped me understand how small usability issues can have a significant
+         impact on the overall experience. By combining user feedback, app reviews, and my own
+         exploration, I learned to look beyond visual improvements and focus on making the
+         experience clearer, simpler, and more intuitive for users.</p>
+      <p>More than redesigning an interface, this project taught me to question existing design
+         decisions and approach problems from the user's perspective.</p>
+    </div>
+    <img data-slot="sticker" class="ph irc__sticker" src="../../assets/media/b74e09b0ed0c.webp" alt="">
+  </section>
+</main>
+
+</div>
+
+<!-- the sheet's contact shadow, column-width, riding on its lower edge -->
+<div class="page-shade" aria-hidden="true"></div>
+
+<footer class="foot">
+  <div class="gridrules gridrules--foot" aria-hidden="true"></div>
+  <div class="foot__in">
+      <a class="foot__brand brandmark" id="footLogo" href="../../" aria-label="Shivam — home"></a>
+      <nav class="foot__links">
+        <a href="https://x.com/shivnegi0" rel="me noopener" target="_blank">X:</a>
+        <a href="https://www.linkedin.com/in/shivam-negi-373739171/" rel="me noopener" target="_blank">Linkedin:</a>
+        <a href="mailto:shivamnegi5128@gmail.com">Email:</a>
+      </nav>
+      <p class="foot__note"><b>note for you</b><span>Thank you human for the visit, <br>and If you are reading this <br>i think i did something right.</span></p>
+      <button class="snd-btn" id="sndFooter" type="button" aria-pressed="false" aria-label="Mute sound effects">
+        <!-- one icon, three groups. The speaker body never moves; the waves and
+             the cross trade places, which is what lets each be scaled, faded
+             and blurred on its own. Paths are the Figma ones, split at x=15. -->
+        <svg class="snd-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g class="snd-body" fill="#D1CDB4"><path d="M13 22H11V20H9V18H11V6H9V4H11V2H13V22ZM9 18H7V16H9V18ZM7 10H5V14H7V16H3V8H7V10ZM9 8H7V6H9V8Z"/></g>
+          <g class="snd-wave" fill="#D1CDB4"><path d="M19 18H15V16H19V18ZM21 16H19V8H21V16ZM17 14H15V10H17V14ZM19 8H15V6H19V8Z"/></g>
+          <g class="snd-x" fill="#D1CDB4"><path d="M17.001 15.224H15.001V13.224H17V11.224H15.001V9.224H17.001L17 11.224H19V13.224H17L17.001 15.224ZM21 15.224H19V13.224H21V15.224ZM21 11.224H19V9.224H21V11.224Z"/></g>
+        </svg>
+      </button>
+    <span class="snd-tip" id="sndTip">Mute sound effects</span>
+  </div>
+</footer>
+
+<!-- the scroll room the reveal happens in: transparent, so the pinned footer
+     shows through it as the content sheet above slides past -->
+<div class="foot-space" id="contact" aria-hidden="true"></div>
+
+
+<script src="../../assets/shell.js" defer></script>
+</body>
+</html>

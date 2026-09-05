@@ -1,0 +1,488 @@
+/* ==========================================================================
+   HOME — the sections only this page has.
+   ========================================================================== */
+/* =============================== HERO ==================================== */
+.hero{margin-top:161px;padding-left:var(--pad)}
+.hero h1{
+  margin:0; font-family:var(--font-display); font-weight:400;
+  font-size:52px; line-height:60px; color:#fff; max-width:722px;
+  text-wrap:balance;
+}
+.hero p{
+  margin:17px 0 0; font-family:var(--font-body); font-weight:400;
+  font-size:16px; line-height:normal; color:var(--white-dim); max-width:722px;
+}
+
+/* ============================= PROJECTS ================================== */
+.projects{margin-top:73px;padding-left:var(--pad)}
+.projects__row{display:flex;gap:72px;flex-wrap:wrap}
+.projects .pcard{
+  --k:1;              /* the card's own authored 174 × 188 */
+  margin-inline:0;    /* its auto margins were absorbing the row's spare space,
+                         stretching the 246px pitch the Figma sets to 251 */
+}
+
+/* ============================== TICKER =================================== */
+/* The Figma clips the strip to the 960 column (Ticker container 3860:9923) —
+   the cards run past its edges and are cut, they do not bleed to the viewport. */
+.ticker{
+  margin-top:76px; height:314px;
+  display:flex; align-items:center;
+  overflow:hidden; background:var(--bg);
+}
+.ticker__track{display:flex;width:max-content;animation:ticker-run 64s linear infinite}
+.ticker__set{display:flex;gap:12px;padding-right:12px}
+.ticker__card{
+  flex:0 0 auto; width:276px; height:289px;
+  background:var(--ticker-card);
+  border-right:1px solid var(--ticker-edge);
+  position:relative; overflow:hidden;
+}
+.ticker__card:nth-child(even){width:277px}
+/* the strip is decorative and it is moving: nothing in it should be clickable
+   or catch a scroll on the way past */
+.ticker__set{pointer-events:none}
+/* a picture crops itself */
+.ticker__img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+/* an iframe cannot, so it is given the card's height and its own width — the
+   piece's aspect ratio times that height — and centred, which crops it to the
+   card exactly the way cover would. min-width keeps a piece narrower than the
+   card from leaving a gap. */
+.ticker__v{
+  position:absolute; top:50%; left:50%; translate:-50% -50%;
+  height:100%; width:auto; aspect-ratio:var(--ar); min-width:100%;
+  border:0; display:block;
+}
+@keyframes ticker-run{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media (prefers-reduced-motion:reduce){.ticker__track{animation:none}}
+
+/* =========================== EXPEDITIONS ================================= */
+.expeditions{margin-top:121px}
+
+/* ============================== SCENE ====================================
+   The band spans exactly 20 grid rows, sitting between the rule at y 1756
+   and the one at y 2056 with both left visible — the same relationship the
+   Figma frame has (254 = 17 rows, top on rule+1, bottom flush to a rule),
+   so neither edge cuts a square in half. 299 = 20 × 15 − 1 keeps it.
+   The drawing is never stretched: its canvas is extended upwards instead
+   (see build_home.py › SKY_LIFT), so the ground stays on the lower edge and
+   the sky doodles stay near the upper one, with the extra height opening up
+   as sky in between. */
+.scene{
+  margin-top:103px; position:relative;
+  height:299px; background:var(--bg);
+}
+.scene__in{position:relative;width:100%;height:100%}
+.scene #stage{position:relative;z-index:1}
+/* the caption is written by the handwriting component instead of being
+   drawn as a static path by the scene */
+/* anchored to the drawing's original 958 × 255 box at the foot of the band,
+   so the caption keeps the distance from the mountains the Figma frame gives
+   it rather than drifting up as the sky opens out */
+.scene .writing{
+  position:absolute; left:0; right:0; bottom:0; top:auto;
+  min-height:0; height:auto; aspect-ratio:958 / 255;
+  background:transparent; z-index:2; pointer-events:none;
+}
+.scene .writing__text{color:#fff}
+
+/* --- the `work` link, held back until the page moves --------------------
+   The home page opens on the hero, and the word sits in the same band as the
+   name and the button with nothing yet to go back to. It arrives once the
+   visitor has started reading — `data-scrolled` is set by the shell past 60px
+   — and leaves again at the top. Every other page keeps it from the first
+   frame, because on those it is the way back to the grid.
+
+   `visibility` alongside the fade so the word is not an invisible target while
+   it is out; both are transitioned so it fades rather than blinks, with the
+   visibility switch held to the end of the fade on the way out. */
+.nav__work{
+  opacity:0; visibility:hidden;
+  transition:color 200ms var(--ease-out),
+             opacity 260ms var(--ease-out),
+             visibility 0s linear 260ms;
+}
+[data-scrolled] .nav__work{
+  opacity:1; visibility:visible;
+  transition:color 200ms var(--ease-out),
+             opacity 260ms var(--ease-out),
+             visibility 0s linear 0s;
+}
+@media (prefers-reduced-motion: reduce){
+  .nav__work,[data-scrolled] .nav__work{ transition:color 200ms var(--ease-out) }
+}
+
+/* ---------------------------- responsive --------------------------------- */
+@media (max-width:1000px){
+  :root{--pad:0px}
+  .hero h1{font-size:clamp(32px,5.6vw,52px);line-height:1.15}
+  .projects__row{gap:32px;justify-content:center}
+}
+
+
+
+
+/* ---------- corrections ---------- */
+/* The folder panel's svg is 276 × 342.9 and hangs ~51px left and ~155px below
+   the 174 × 188 card, outside the pocket's clip. As a child of the <a> it was
+   taking pointer events, so the card stayed 'hovered' well outside its frame. */
+.pcard__panel,.pcard__panel svg{pointer-events:none}
+
+
+
+/* --- two stickers grown ---------------------------------------------------
+   The holographic sticker is the card's top layer, and the picture inside it
+   is sized in percentages of its box, so stretching the box on one axis alone
+   would stretch the sticker with it. These keep each one's proportions and
+   grow it ten pixels across, and the position is moved by half of what each
+   side gained so the sticker opens out from where it already sat rather than
+   sliding down and right.
+     HostelHive  77.351 x 81  ->  87.351 x 91.472   (x1.1293)
+     FAIR        80     x 64  ->  90     x 72       (x1.125)                 */
+.projects .c-hh   .pl--ov{ left:43.99px; top:44.764px;
+                           width:87.351px; height:91.472px }
+.projects .c-fair .pl--ov{ left:42px;     top:52px;
+                           width:90px;     height:72px }
+/* and the sheet inside it, which is the part that actually paints — the outer
+   figure only places it, so sizing that alone changes nothing you can see */
+.projects .c-hh   .pl--ov .pl__r{ width:87.351px; height:91.472px }
+.projects .c-fair .pl--ov .pl__r{ width:90px;     height:72px }
+
+
+/* ---------- expeditions ---------- */
+
+/* ============================================================
+   TOKENS — from Figma › Projectss › Section 2 (default / active)
+   ============================================================ */
+:root{
+  --bg:           #141814;
+  --hairline:     #343434;
+  --card-bg:      #191f19;
+  --card-border:  #242424;
+  --ink:          #d1cdb4;
+  --ink-muted:    rgba(209,205,180,.7);
+
+  --band-w:       959px;
+  --row-w:        855.5px;
+  --card-w:       265px;
+  --card-radius:  8px;
+  --row-gap:      30px;
+
+  --fan-w:        339px;   /* Figma 4386:2170 */
+  --fan-h:        114px;
+  --photo-w:      83.778px;/* 75.778 leaf + 4px border each side */
+  --photo-h:      109.038px;
+
+  --dim-blur:     5.64px;  /* Figma's 4.7px, +20% */
+  --dim-opacity:  .72;
+
+  --font-display: "Exposure Trial VAR","Exposure Trial",Newsreader,"Times New Roman",Georgia,serif;
+  --font-body:    Geist,"Geist Light",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --card-shadow:
+    0 124px 17.5px rgba(0,0,0,0),
+    0 79px 16px rgba(0,0,0,.02),
+    0 45px 13.5px rgba(0,0,0,.07),
+    0 20px 10px rgba(0,0,0,.11),
+    0 5px 5.5px rgba(0,0,0,.13);
+
+  --ease-out: cubic-bezier(.22,.85,.3,1);
+  --dur-dim:  260ms;   /* blur/dim settling on the quiet cards */
+}
+
+
+
+/* ============================================================
+   THE BAND — Figma frame is 959 × 464
+   ============================================================ */
+
+.exp{
+  position:relative;
+  width:100%;
+  padding:23.5px 0 24.5px;
+  background:var(--bg);
+  border-top:1px solid #000;
+  border-bottom:1px solid #000;
+}
+.exp::before{                    /* Figma shadow 0 -1px 0 #343434 */
+  content:"";position:absolute;inset:-2px 0 auto 0;height:1px;background:var(--hairline);
+}
+
+.exp__row{
+  display:flex;
+  gap:var(--row-gap);
+  justify-content:center;
+  align-items:stretch;
+  flex-wrap:wrap;
+  width:100%;
+  max-width:var(--row-w);
+  margin:0 auto;
+}
+
+/* the band between the rows: heading by default, photo fan when active */
+.exp__center{
+  position:relative;
+  height:184px;                  /* Figma: 139.5 → 323.5 */
+  display:flex; align-items:center; justify-content:center;
+}
+
+.exp__heading{
+  font-family:var(--font-display);
+  font-size:18px; line-height:normal; color:var(--ink);
+  margin:0; text-align:center;
+  transition:opacity 240ms var(--ease-out), filter 240ms var(--ease-out);
+}
+.exp.is-active .exp__heading{      /* the fan takes this spot */
+  opacity:0;
+  filter:blur(var(--dim-blur));
+}
+
+/* ---- card (unchanged from the design) ---- */
+.exp__card{
+  width:var(--card-w);
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--card-radius);
+  padding:16px 12px;
+  box-shadow:var(--card-shadow);
+  display:flex; flex-direction:column;
+  text-align:left; font:inherit; color:inherit;
+  cursor:default;
+}
+.exp__card:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+
+/* Only the COPY blurs — the card box, border and shadow stay crisp,
+   exactly as the Figma active frame has it. */
+.exp__card__inner{
+  display:flex; flex-direction:column; gap:6px;
+  word-break:break-word;
+  transition:filter var(--dur-dim) var(--ease-out),
+             opacity var(--dur-dim) var(--ease-out);
+}
+.exp.is-active .exp__card:not(.is-active) .exp__card__inner{
+  filter:blur(var(--dim-blur));
+  opacity:var(--dim-opacity);
+}
+
+.exp__title{
+  font-family:var(--font-display);
+  font-size:18px; line-height:normal; color:var(--ink); margin:0;
+}
+.exp__body{
+  font-family:var(--font-body); font-weight:300;
+  font-size:14px; line-height:normal; color:var(--ink-muted); margin:0;
+}
+
+/* ============================================================
+   THE FAN — Figma 4386:2170, dead-centre, 339 × 114
+   Positions are written by JS every frame; CSS only owns looks.
+   ============================================================ */
+.exp__fan{
+  position:absolute;
+  left:50%; top:50%;
+  width:var(--fan-w); height:var(--fan-h);
+  margin-left:calc(var(--fan-w) / -2);
+  margin-top:calc(var(--fan-h) / -2);
+  pointer-events:none;             /* never interferes with hovering a card */
+}
+.exp__photo{
+  position:absolute; left:0; top:0;
+  width:var(--photo-w); height:var(--photo-h);
+  border:4px solid #fff;
+  border-radius:6px;
+  overflow:hidden;
+  background:#20261f;
+  box-shadow:0 2px 6px rgba(0,0,0,.28), 0 10px 22px rgba(0,0,0,.38);
+  opacity:0;
+  will-change:transform,opacity;
+  backface-visibility:hidden;
+}
+.exp__photo img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  border-radius:2px;
+  transition:opacity 140ms var(--ease-out);
+}
+/* fallback plate, only seen if a photo src is ever missing or fails */
+.exp__photo.is-empty{
+  background:linear-gradient(148deg,#39433a 0%,#2b332c 46%,#1e241f 100%);
+}
+
+/* the two halves are set by hand above; under 900 the column is narrower
+   than the longer of them, so the forced break only adds a short line */
+.exp__heading br{display:inline}
+@media (max-width:900px){
+  .exp__heading br{display:none}
+  .exp__center{height:200px}
+}
+@media (prefers-reduced-motion:reduce){
+  .exp__heading{transition:opacity 120ms linear}
+}
+
+/* ---------- endless scene (attached: nivia) ---------- */
+
+#stage{width:100%;line-height:0}
+  #scene{
+    display:block;width:100%;height:auto;
+    cursor:url("media/7f7db3e0e2fc.svg") 4 2, crosshair;
+    -webkit-user-select:none;user-select:none;touch-action:manipulation;
+  }
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- handwriting (attached: writing animation) ---------- */
+
+/* ------------------------------------------------------------------
+     Figma node 4326:1227 — "writing"
+     The static design is the source of truth and is untouched:
+     bg #141814, Bradley Hand ITC 24px, white, centred, top calc(50% - 30px).
+     Everything the animation adds is either a mask (no layout cost) or an
+     absolutely positioned hairline (no layout cost).
+     ------------------------------------------------------------------ */
+  .writing{
+    --bg: #141814;
+    --ink: #ffffff;
+    --feather: 0.5em;  /* softness of the writing edge — 12px at the designed 24px */
+  }
+
+  .writing {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* the text block, positioned exactly as in the frame */
+  .writing__text {
+    position: absolute;
+    left: calc(50% + 0.5px);
+    top: calc(50% - 39px);
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: "Bradley Hand ITC", "Bradley Hand", "BradleyHandITCTT",
+                 "Segoe Script", "Segoe Print", "Brush Script MT", cursive;
+    font-style: normal;
+    font-weight: 400;
+    /* 24px at and above the designed width; scales down only when the frame
+       is narrower than the line, so the nowrap line can never overflow. */
+    font-size: clamp(11px, 2.96vw, 20px);
+    line-height: normal;
+    color: var(--ink);
+    text-align: center;
+    white-space: nowrap;
+    word-break: break-word;
+  }
+
+  /* the dateline under it — Figma 4727:2119, 12px light italic at 60% white,
+     14px below the writing. The design sets Roboto; the site already carries a
+     light italic in its own body face, so it is used rather than pulling a
+     whole extra family down the wire for one line.
+
+     Placed from the centre like the writing above it: the pair is 78 tall in
+     the design and centred in the band, so the writing starts 39 above the
+     middle and this sits 25 below it. Anchoring both to the centre rather than
+     stacking them means a fallback face with slightly different metrics can
+     only open or close the gap a pixel, never push either line out of the
+     band. It is not handwritten, so it does not animate and the nib never
+     visits it. */
+  .writing__stamp {
+    position: absolute;
+    left: calc(50% + 0.5px);
+    top: calc(50% + 25px);
+    transform: translateX(-50%);
+    margin: 0;
+    width: 587px;
+    max-width: 100%;
+    font-family: var(--font-body, "Geist", system-ui, sans-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(9px, 1.78vw, 12px);
+    line-height: normal;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* one row per visual line, so the reveal can be measured per line */
+  .ln { position: relative; display: block; }
+
+  /* the inline box that actually holds the glyphs — this is what is masked */
+  .ln__ink { display: inline-block; white-space: pre; }
+
+  /* Progressive reveal: a soft-edged mask advancing across the glyphs, so
+     letters appear mid-stroke rather than popping in whole. Masking never
+     changes layout, so there is no shift at any point. */
+  .is-animating .ln__ink {
+    -webkit-mask-image: linear-gradient(90deg,
+        #000 0,
+        #000 max(0px, calc(var(--r, 0px) - var(--feather))),
+        rgba(0, 0, 0, 0) var(--r, 0px),
+        rgba(0, 0, 0, 0) 100%);
+            mask-image: linear-gradient(90deg,
+        #000 0,
+        #000 max(0px, calc(var(--r, 0px) - var(--feather))),
+        rgba(0, 0, 0, 0) var(--r, 0px),
+        rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+  }
+
+  /* faint ink cursor: a hairline nib stroke riding the writing edge */
+  .nib {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1.3px;
+    height: 0.88em;
+    margin-top: -0.44em;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.85) 22%,
+        rgba(255, 255, 255, 0.95) 78%,
+        rgba(255, 255, 255, 0) 100%);
+    border-radius: 1px;
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-13deg);
+    transform-origin: 50% 100%;
+    pointer-events: none;
+    filter: blur(0.25px);
+    will-change: transform, opacity;
+  }
+
+  /* subtle sound toggle — same palette, out of the way, fades away at the end */
+  .snd {
+    position: absolute;
+    right: 18px;
+    bottom: 16px;
+    width: 26px;
+    height: 26px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    opacity: 0.22;
+    cursor: pointer;
+    transition: opacity 320ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .snd.is-visible { display: flex; }
+  .snd:hover, .snd:focus-visible { opacity: 0.62; outline: none; }
+  .snd:focus-visible { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28); }
+  .snd svg { width: 15px; height: 15px; display: block; }
+  .snd .snd__off { display: none; }
+  .snd[aria-pressed="true"] .snd__on { display: none; }
+  .snd[aria-pressed="true"] .snd__off { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .snd { display: none !important; }
+    .nib { display: none !important; }
+  }

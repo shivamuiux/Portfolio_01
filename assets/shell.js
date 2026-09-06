@@ -1318,13 +1318,39 @@ window.mountGridSnap = function () {
 
     var quiet = matchMedia('(prefers-reduced-motion: reduce)');
 
+    /* One notice for the whole page, in the corner of the window. It is built
+       here rather than written into the markup so there is exactly one of it
+       however many things can copy, and so it is in the document from the
+       first frame — a live region has to exist before its text changes for the
+       change to be announced. */
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"' +
+      ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M20 6 9 17l-5-5"/></svg><span></span>';
+    var toastMsg = toast.querySelector('span'), toastOff = 0;
+    (document.body || document.documentElement).appendChild(toast);
+
+    function say(ok, email){
+      toastMsg.innerHTML = ok
+        ? '<b>' + email + '</b> copied to clipboard'
+        : 'Couldn’t copy — the address is <b>' + email + '</b>';
+      toast.querySelector('svg').style.display = ok ? '' : 'none';
+      toast.dataset.show = '1';
+      clearTimeout(toastOff);
+      /* a second on screen once it has arrived, then it goes */
+      toastOff = setTimeout(function(){ delete toast.dataset.show; }, 1000);
+    }
+
     [].forEach.call(document.querySelectorAll('.cbtn'), function(btn){
       var wrap  = btn.parentNode,
           email = btn.dataset.email || '',
           shine = btn.querySelector('.cbtn__shine'),
           tick  = btn.querySelector('.cbtn__tick path'),
           said  = btn.querySelector('.cbtn__said'),
-          live  = wrap.querySelector('[role="status"]'),
           halos = [].slice.call(wrap.querySelectorAll('.cbtn__halo')),
           slots = { idle:   btn.querySelector('.cbtn__slot--idle'),
                     hover:  btn.querySelector('.cbtn__slot--hover'),
@@ -1384,11 +1410,9 @@ window.mountGridSnap = function () {
       btn.addEventListener('click', function(){
         playContact();
         copy(email).then(function(ok){
-          if (said) said.textContent = ok ? 'Copied' : email;
+          if (said) said.textContent = ok ? 'Copied' : 'Blocked';
           if (tick) tick.style.display = ok ? '' : 'none';
-          if (live) live.textContent = ok
-            ? email + ' copied to your clipboard.'
-            : 'Copying is blocked here. The address is ' + email + '.';
+          say(ok, email);            /* the address goes in the corner notice */
           measure();
           if (!quiet.matches) {
             halos.forEach(function(h, i){
@@ -1409,7 +1433,6 @@ window.mountGridSnap = function () {
           clearTimeout(t2);
           t2 = setTimeout(function(){
             go(inside ? 'hover' : 'idle');
-            if (live) live.textContent = '';
             if (tick) tick.setAttribute('stroke-dashoffset', '1');
           }, 2000 + (quiet.matches ? 0 : 400));
         });
@@ -1424,11 +1447,12 @@ window.mountGridSnap = function () {
           hold = 0;
       el.addEventListener('click', function(){
         playContact();
-        copy(el.dataset.email || '').then(function(ok){
+        var mail = el.dataset.email || '';
+        copy(mail).then(function(ok){
+          say(ok, mail);
           if (!word) return;
-          word.textContent = ok ? 'Copied!' : (el.dataset.email || was);
+          word.textContent = ok ? 'Copied!' : 'Blocked';
           el.dataset.said = '1';
-          el.setAttribute('aria-live', 'polite');
           clearTimeout(hold);
           hold = setTimeout(function(){
             word.textContent = was;

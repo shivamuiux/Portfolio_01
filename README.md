@@ -116,8 +116,20 @@ the specular streak rescale together instead of being blurred by a transform.
 The clipboard write tries `navigator.clipboard` first and falls back to a
 hidden textarea for contexts that refuse it — an insecure origin, or an older
 browser. If both fail the button shows the address itself rather than claiming
-a copy that did not happen. The footer's `Email:` does the same thing in place,
-since there is no room down there for a pill that changes width.
+a copy that did not happen.
+
+**Where it says so.** In the corner of the window, never next to the button. A
+single `.toast`, built once by the shell and shared by everything that copies,
+appears in the bottom left, holds for a second and goes. Nothing on the page
+moves for it. The first version put an `aria-live` span inside the button's own
+wrapper, relying on a `.sr` class that is only defined in the home page's scene
+stylesheet — so on every other page the sentence rendered as ordinary visible
+text under the navbar and shoved the button sideways. The notice is visible by
+design now, which means it can be the live region itself: no hidden twin, and
+nothing that depends on a class defined somewhere else.
+
+The footer's `Email:` uses the same notice and swaps its own label to
+"Copied!", since there is no room down there for a pill that changes width.
 
 ---
 

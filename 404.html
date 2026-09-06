@@ -27,14 +27,32 @@
     <div class="col nav__in">
       <a class="nav__brand brandmark" id="navLogo" href="" aria-label="Shivam — home"></a>
       <a class="nav__work" href="work/">work</a>
-      <a class="btn nav__cta" href="mailto:shivamnegi5128@gmail.com">
-        <span class="btn__shine" aria-hidden="true"></span>
-        <span class="btn__label">Contact</span>
-        <span class="btn__ico" aria-hidden="true">
-          <svg class="i-default" viewBox="0 0 4.66863 7.74047" fill="none"><path d="M4.43436 3.30513L1.36573 0.235968C0.861783 -0.268072 0 0.0888458 0 0.801603V6.93886C0 7.65155 0.861644 8.0085 1.36564 7.5046L4.43427 4.4365C4.74671 4.12411 4.74676 3.61758 4.43436 3.30513Z" fill="white"/></svg>
-          <svg class="i-hover" viewBox="0 0 4.14214 4.15044" fill="none"><path d="M0 2.07522C0 3.92026 2.23065 4.84434 3.53541 3.53981C4.34428 2.73108 4.34439 1.41975 3.53566 0.610882C2.23101 -0.693994 0 0.230008 0 2.07522Z" fill="white"/></svg>
-        </span>
-      </a>
+      <!-- Contact — Figma "contact btn 4" (4758:1517). It copies the address
+           rather than handing the visitor off to a mail client: a mailto: on a
+           machine with nothing registered opens nothing at all, and on one with
+           Outlook registered opens the wrong thing. Three states share the pill
+           and it morphs to whichever label is showing. -->
+      <span class="cbtn-wrap nav__cta">
+        <button class="cbtn" id="navCta" type="button"
+                data-email="shivamnegi5128@gmail.com" data-mode="idle"
+                aria-label="Copy email address shivamnegi5128@gmail.com">
+          <span class="cbtn__cap" aria-hidden="true"></span>
+          <span class="cbtn__shine" aria-hidden="true"></span>
+          <span class="cbtn__slot cbtn__slot--idle">Contact</span>
+          <span class="cbtn__slot cbtn__slot--hover">
+            <svg class="cbtn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8V5.2c0-1.12 0-1.68.218-2.108a2 2 0 0 1 .874-.874C9.52 2 10.08 2 11.2 2h7.6c1.12 0 1.68 0 2.108.218a2 2 0 0 1 .874.874C22 3.52 22 4.08 22 5.2v7.6c0 1.12 0 1.68-.218 2.108a2 2 0 0 1-.874.874C20.48 16 19.92 16 18.8 16H16"/><path d="M5.2 22h7.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C16 20.48 16 19.92 16 18.8v-7.6c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 8 13.92 8 12.8 8H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 9.52 2 10.08 2 11.2v7.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C3.52 22 4.08 22 5.2 22Z"/></svg>
+            <span>Email</span>
+          </span>
+          <span class="cbtn__slot cbtn__slot--copied">
+            <svg class="cbtn__ico cbtn__tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+            <span class="cbtn__said">Copied</span>
+          </span>
+          <span class="cbtn__light" aria-hidden="true"></span>
+        </button>
+        <span class="cbtn__halo" aria-hidden="true"></span>
+        <span class="cbtn__halo" aria-hidden="true"></span>
+        <span class="sr" role="status" aria-live="polite"></span>
+      </span>
     </div>
   </header>
 
@@ -60,7 +78,9 @@
       <nav class="foot__links">
         <a href="https://x.com/shivnegi0" rel="me noopener" target="_blank">X:</a>
         <a href="https://www.linkedin.com/in/shivam-negi-373739171/" rel="me noopener" target="_blank">Linkedin:</a>
-        <a href="mailto:shivamnegi5128@gmail.com">Email:</a>
+        <!-- copies rather than opening a mail client, same as the navbar's -->
+        <button class="foot__copy" type="button" data-email="shivamnegi5128@gmail.com"
+                aria-label="Copy email address shivamnegi5128@gmail.com"><span>Email:</span></button>
       </nav>
       <p class="foot__note"><b>note for you</b><span>Thank you human for the visit, <br>and If you are reading this <br>i think i did something right.</span></p>
       <button class="snd-btn" id="sndFooter" type="button" aria-pressed="false" aria-label="Mute sound effects">

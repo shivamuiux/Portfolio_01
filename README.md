@@ -98,6 +98,29 @@ grid and cursor for free.
 
 ---
 
+## The contact button
+
+`.cbtn` in the shell — one instance in the navbar, on every page. It **copies
+the address**; it does not open a mail client. A `mailto:` opens nothing at all
+on a machine with no mail client registered, and the wrong thing on one where
+something else claimed the protocol.
+
+Three labels are stacked on top of each other and one shows at a time —
+Contact, Email on hover, Copied after a press — and the pill morphs to the
+width of whichever is showing. That width is the only thing set from
+JavaScript, because it is measured from the label; the rest is in the
+stylesheet, driven by `data-mode` / `data-prev` / `data-press` on the button.
+Every length is in `em` against its own 14px, so the shadows, the cap plate and
+the specular streak rescale together instead of being blurred by a transform.
+
+The clipboard write tries `navigator.clipboard` first and falls back to a
+hidden textarea for contexts that refuse it — an insecure origin, or an older
+browser. If both fail the button shows the address itself rather than claiming
+a copy that did not happen. The footer's `Email:` does the same thing in place,
+since there is no room down there for a pill that changes width.
+
+---
+
 ## Two things worth knowing
 
 **The display font.** The headings ask for *Exposure Trial VAR* first, which is

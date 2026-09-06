@@ -1282,7 +1282,162 @@ window.mountGridSnap = function () {
       setTimeout(function(){ location.href = el.href; }, 150);
     });
   }
-  [].forEach.call(document.querySelectorAll('.nav__cta'), function(el){ onTap(el, playContact); });
+  /* ---------- the contact button, and the footer's email ----------
+     Both copy the address. A mailto: opens nothing at all on a machine with no
+     mail client registered, and the wrong thing on one where something else
+     claimed the protocol; an address on the clipboard works everywhere and
+     asks nothing of the visitor.
+
+     The pill carries three labels stacked on top of each other and shows one
+     at a time — Contact, Email on hover, Copied after a press — and its width
+     is set here because that width is whichever label is currently showing.
+     Everything else about it is in the stylesheet. */
+  (function(){
+    function copy(text){
+      /* the async clipboard first; the textarea is for the contexts that
+         refuse it — an insecure origin, or a browser that wants the older
+         call — and the button says the address out loud if both fail */
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).then(function(){ return true; },
+                                                        function(){ return legacy(text); });
+      }
+      return Promise.resolve(legacy(text));
+    }
+    function legacy(text){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly','');
+        ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0, text.length);
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return !!ok;
+      }catch(e){ return false; }
+    }
+
+    var quiet = matchMedia('(prefers-reduced-motion: reduce)');
+
+    [].forEach.call(document.querySelectorAll('.cbtn'), function(btn){
+      var wrap  = btn.parentNode,
+          email = btn.dataset.email || '',
+          shine = btn.querySelector('.cbtn__shine'),
+          tick  = btn.querySelector('.cbtn__tick path'),
+          said  = btn.querySelector('.cbtn__said'),
+          live  = wrap.querySelector('[role="status"]'),
+          halos = [].slice.call(wrap.querySelectorAll('.cbtn__halo')),
+          slots = { idle:   btn.querySelector('.cbtn__slot--idle'),
+                    hover:  btn.querySelector('.cbtn__slot--hover'),
+                    copied: btn.querySelector('.cbtn__slot--copied') },
+          mode = 'idle', inside = false, widths = {}, t1 = 0, t2 = 0;
+
+      /* Each label is measured on its own and the pill takes that width plus
+         the design's padding, with the 7em minimum the Figma pill has. It is
+         offsetWidth, which is layout width, so the blur and scale sitting on
+         the labels do not have to be taken off to read it. */
+      function measure(){
+        var em = parseFloat(getComputedStyle(btn).fontSize) || 14, k;
+        for (k in slots) if (slots[k])
+          widths[k] = Math.max(7 * em, slots[k].offsetWidth + 2.3 * em);
+        if (widths[mode]) btn.style.width = widths[mode] + 'px';
+      }
+      measure();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+      addEventListener('resize', measure, { passive:true });
+
+      function sweep(ms, peak){
+        if (!shine || quiet.matches || !shine.animate) return;
+        var w = btn.getBoundingClientRect().width;
+        shine.animate([
+          { transform:'translateX(' + (-0.18 * w) + 'px)', opacity:0 },
+          { transform:'translateX(' + ( 0.35 * w) + 'px)', opacity:peak, offset:.45 },
+          { transform:'translateX(' + ( 1.15 * w) + 'px)', opacity:0 }
+        ], { duration:ms, easing:'cubic-bezier(.32,.06,.28,1)' });
+      }
+
+      function go(next){
+        if (mode === next) return;
+        btn.dataset.prev = mode;
+        mode = next;
+        btn.dataset.mode = next;
+        if (widths[next]) btn.style.width = widths[next] + 'px';
+        if (!quiet.matches) {
+          btn.dataset.morph = '1';
+          clearTimeout(t1);
+          t1 = setTimeout(function(){ delete btn.dataset.morph; }, 200);
+        }
+      }
+
+      btn.addEventListener('pointerenter', function(){
+        inside = true;
+        if (mode !== 'copied') { go('hover'); sweep(880, .7); }
+      });
+      btn.addEventListener('pointerleave', function(){
+        inside = false; delete btn.dataset.press;
+        if (mode !== 'copied') go('idle');
+      });
+      btn.addEventListener('pointerdown', function(){ btn.dataset.press = '1'; });
+      addEventListener('pointerup', function(){ delete btn.dataset.press; }, { passive:true });
+      btn.addEventListener('focus', function(){ if (mode !== 'copied') go('hover'); });
+      btn.addEventListener('blur',  function(){ if (mode !== 'copied' && !inside) go('idle'); });
+
+      btn.addEventListener('click', function(){
+        playContact();
+        copy(email).then(function(ok){
+          if (said) said.textContent = ok ? 'Copied' : email;
+          if (tick) tick.style.display = ok ? '' : 'none';
+          if (live) live.textContent = ok
+            ? email + ' copied to your clipboard.'
+            : 'Copying is blocked here. The address is ' + email + '.';
+          measure();
+          if (!quiet.matches) {
+            halos.forEach(function(h, i){
+              if (!h.animate) return;
+              h.animate([
+                { opacity:.85, transform:'scale(1,1)',       filter:'blur(0px)' },
+                { opacity:0,   transform:'scale(1.45,2.1)',  filter:'blur(6px)' }
+              ], { duration:760, delay:i * 110,
+                   easing:'cubic-bezier(.2,.7,.3,1)', fill:'forwards' });
+            });
+            if (tick && tick.animate && ok)
+              tick.animate([{ strokeDashoffset:1 }, { strokeDashoffset:0 }],
+                { duration:440, delay:160, easing:'cubic-bezier(.2,.8,.3,1)', fill:'forwards' });
+            sweep(360, .95);
+            setTimeout(function(){ sweep(420, .55); }, 110);
+          }
+          go('copied');
+          clearTimeout(t2);
+          t2 = setTimeout(function(){
+            go(inside ? 'hover' : 'idle');
+            if (live) live.textContent = '';
+            if (tick) tick.setAttribute('stroke-dashoffset', '1');
+          }, 2000 + (quiet.matches ? 0 : 400));
+        });
+      });
+    });
+
+    /* the footer's email says so in place, since there is no room down there
+       for a pill that changes width */
+    [].forEach.call(document.querySelectorAll('.foot__copy'), function(el){
+      var word = el.querySelector('span'),
+          was  = word ? word.textContent : '',
+          hold = 0;
+      el.addEventListener('click', function(){
+        playContact();
+        copy(el.dataset.email || '').then(function(ok){
+          if (!word) return;
+          word.textContent = ok ? 'Copied!' : (el.dataset.email || was);
+          el.dataset.said = '1';
+          el.setAttribute('aria-live', 'polite');
+          clearTimeout(hold);
+          hold = setTimeout(function(){
+            word.textContent = was;
+            delete el.dataset.said;
+          }, 2000);
+        });
+      });
+    });
+  })();
   [].forEach.call(document.querySelectorAll('#navLogo, #footLogo, .brandmark'),
                   function(el){ onTap(el, playLogo); });
 })();

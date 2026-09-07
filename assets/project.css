@@ -1,11 +1,4 @@
-/* ==========================================================================
-   CASE STUDY — the shared layout for a project page. It only sets type and
-   rhythm inside the column; the frame around it (grid, rules, navbar, the
-   revealed footer) is the shell's, so a project page needs no layout code
-   of its own.
-   ========================================================================== */
 .case__head{margin-top:161px;padding-left:var(--pad)}
-
 .case__back{
   display:inline-block; margin-bottom:28px;
   font-family:var(--font-body); font-weight:300; font-size:14px;
@@ -13,23 +6,17 @@
   transition:color 160ms var(--ease-out);
 }
 .case__back:hover{color:var(--ink)}
-
 .case__head h1{
   margin:0; font-family:var(--font-display); font-weight:400;
   font-size:52px; line-height:60px; color:#fff; max-width:722px;
   text-wrap:balance;
 }
-
 .case__meta{
   display:flex; gap:61px; margin:26px 0 0;
   font-family:var(--font-body); font-size:14px; font-weight:300;
 }
 .case__meta dt{color:var(--ink-dim);margin:0 0 6px}
 .case__meta dd{margin:0;color:var(--ink)}
-
-/* the column stays 960 wide so the images can use it; only the measure of the
-   text is capped, and it stays flush with the heading rather than centring
-   itself inside the column */
 .case__body{margin-top:73px;padding-left:var(--pad);padding-bottom:120px}
 .case__body p,.case__body h2{max-width:722px}
 .case__lede{
@@ -44,15 +31,10 @@
   margin:0; font-family:var(--font-body); font-weight:300;
   font-size:14px; line-height:1.7; color:var(--ink-dim);
 }
-
-/* a placeholder the height of a real image, so the page's rhythm is right
-   before the artwork exists. Replace with <img> when the shots are ready. */
 .case__block{
   margin:44px 0; height:465px; width:100%;
   background:var(--ticker-card); border:1px solid var(--ticker-edge);
 }
-
-/* ------------------------------- 404 ------------------------------------- */
 .nf{margin-top:200px;padding-left:var(--pad);padding-bottom:160px}
 .nf h1{
   margin:0 0 14px; font-family:var(--font-display); font-weight:400;
@@ -62,7 +44,6 @@
   margin:0 0 28px; font-family:var(--font-body); font-weight:300;
   font-size:16px; color:var(--white-dim);
 }
-
 @media (max-width:1000px){
   .case__head h1,.nf h1{font-size:clamp(32px,5.6vw,52px);line-height:1.15}
   .case__block{height:min(56vw,465px)}

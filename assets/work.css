@@ -1,51 +1,9 @@
-/* ==========================================================================
-   WORK — every project on one page.
-
-   The cards are the home page's component, unchanged: same markup, same
-   stylesheet, so the deck fans out, the sticker lifts and the folder shortens
-   on hover exactly as they do there, and the hover sound answers the same
-   pointerenter. All this file adds is where the eight of them sit, the four
-   new ones' own artwork, and the loose stickers underneath.
-
-   Every number is the Figma frame's (4694:1589), measured from a 1440 canvas.
-   ========================================================================== */
-
-/* --- the grid of eight ---------------------------------------------------
-   Row one at y 144, row two at y 384, both 188 tall: a 52px gutter between
-   them. The navbar is 62, so the first row is 82 below where the page's own
-   content starts. Cards are 174 wide on a 246 pitch — a 72px gutter — and the
-   first sits at x 269, which is 29 into the 960 column.                    */
 .wk__grid{ margin-top:82px; padding-left:29px }
 .wk__row{ display:flex; gap:72px; flex-wrap:wrap }
 .wk__row + .wk__row{ margin-top:52px }
-/* --k is the card component's own scale; 1 is the authored 174 x 188. Without
-   it the card has no size of its own and grows to whatever the row gives it —
-   the same reason the home page sets it. The auto margins go too, or they
-   absorb the row's spare space and stretch the 246 pitch. */
 .wk .pcard{ --k:1; margin-inline:0; flex:0 0 auto }
-
-/* --- the four cards this page adds ---------------------------------------
-   Same three-part shape as the four the home page already has: an outer box
-   that is the layer's AXIS-ALIGNED bounds, an inner `.pl__r` that is the
-   layer's own unrotated size and carries the design angle, and the picture —
-   cropped, where the file crops it — filling that. Written this way the hover
-   adds its spin to the design angle instead of replacing it, exactly as it
-   does on the other four.
-
-   Every number here is the file's own, read from the card frame rather than
-   from the layer's bare metadata: that metadata gives a rotated layer's
-   position as where its own top-left corner ENDED UP, but its width and height
-   as the bounds that corner now sits inside, and mixing the two puts a layer
-   as much as seventy pixels out. PC Builder's sticker is the extreme case —
-   quarter-turned, so the file says x 122 for a thing that is drawn at 51.
-
-   Layers inside the deck frame are also plus the 18 that frame is inset by. */
 .c-nv .pl--art img, .c-tg .pl--art img,
 .c-pc .pl--art img, .c-gb .pl--art img{ left:0; top:0; width:100%; height:100% }
-
-/* NIVIA has no phone. Its picture is the middle sheet of the deck — second of
-   three in the file, under the back card rather than over it — so it takes
-   that layer's depth and its hover move as well as its geometry. */
 .c-nv .pl--dev{ left:51.82px; top:24.47px; width:71.381px; height:103.647px;
   --rot:5.67deg; z-index:3;
   --hx:-24.69px; --hy:-10.78px; --hz:4px; --hdr:-38.32deg;
@@ -54,60 +12,26 @@
 .c-nv .pl--ov { left:53px; top:49px; width:68px; height:75px }
 .c-nv .pl--ov .pl__r{ width:68px; height:75px }
 .c-nv .pl--ov  img{ left:.17%; top:-2.91%; width:99.73%; height:113.03% }
-
 .c-tg .pl--dev{ left:51px; top:25px; width:83.448px; height:129.045px; --rot:-13.09deg }
 .c-tg .pl--dev .pl__r{ width:58px; height:119px }
 .c-tg .pl--ov { left:30.25px; top:39.98px; width:113.529px; height:112.693px; --rot:15deg }
 .c-tg .pl--ov .pl__r{ width:92.946px; height:91.764px }
 .c-tg .pl--ov  img{ left:-3.48%; top:-12.81%; width:103.48%; height:130.98% }
-
-/* the same photograph, at the same size and angle, in the same place as
-   Service club's — so it is that card's geometry verbatim, crop included */
-.c-pc .pl--dev{ left:50px; top:25px; width:76.835px; height:86.522px; --rot:-13.01deg }
-.c-pc .pl--dev .pl__r{ width:61.63px; height:74.559px; border-radius:6px }
+.c-pc .pl--dev{ left:49px; top:24px; width:78.42px; height:94.475px; --rot:-12.76deg }
+.c-pc .pl--dev .pl__r{ width:61.63px; height:82.91px; border-radius:6px }
 .c-pc .pl--dev .crop{ border-radius:6px }
-.c-pc .pl--dev  img{ left:-13.02%; top:0; width:120.63%; height:100% }
+.c-pc .pl--dev  img{ left:-115.25%; top:0; width:215.25%; height:100% }
 .c-pc .pl--ov { left:51px; top:63px; width:71px; height:78px; --rot:90deg }
 .c-pc .pl--ov .pl__r{ width:78px; height:71px }
 .c-pc .pl--ov  img{ left:0; top:-15.88%; width:100%; height:137.45% }
-
 .c-gb .pl--dev{ left:50.464px; top:23.4px; width:80.176px; height:102.335px; --rot:-13.84deg }
 .c-gb .pl--dev .pl__r{ width:60.267px; height:90.548px; border-radius:5px; overflow:hidden }
 .c-gb .pl--ov { left:39px; top:49px; width:125.225px; height:76.593px; --rot:15deg }
 .c-gb .pl--ov .pl__r{ width:116.78px; height:48.003px }
 .c-gb .pl--ov  img{ left:-.02%; top:-94.74%; width:100.04%; height:304.09% }
-
-/* --- the stickers --------------------------------------------------------
-   Loose on the column, less the 240 the column starts at and the 662 this
-   block starts at. Each picture already carries the page's own ground in its
-   corners, so the boxes disappear into the background and only the cut-outs
-   read.
-
-   The x here is NOT the x the file's metadata reports. Four of these five are
-   rotated, and for a rotated node Figma reports the origin of the UNROTATED
-   box, which sits to the right of where the thing actually lands — by 57px for
-   the Chibi word, 56 for the round mark, 17 for the wrestler, 3 for the figure,
-   and 0 for the one that isn't rotated at all. The y is unaffected and matches
-   the metadata exactly. So each x is measured instead: the picture Figma
-   renders for the node carries the tilt already, and where its artwork falls
-   inside that picture, matched against where the same artwork falls in the
-   render of the whole frame, gives the origin the node is really drawn at.
-   Sizes are the pictures' own, which Figma rounds up a pixel from the node.  */
-/* 241 tall, not the 265 the tallest sticker needs: the block ends at 903,
-   which is where the footer's own frame begins in the file and cuts the three
-   stickers that hang below it. Clipping here rather than letting them run on
-   keeps that edge, and lands the content sheet's lower edge on the same line
-   the design puts it. */
 .wk__stickers{
   position:relative; margin-top:90px; height:241px; overflow:hidden;
 }
-/* Every other page leaves 118px of sheet below its last section before the
-   footer is uncovered, because that is the gap those designs draw. This one
-   does not: the footer's frame starts at 903, which is exactly where the
-   stickers are cut off, so the sheet has to end there too. Without this the
-   page carries the other pages' gap and the strip floats well clear of the
-   footer instead of tucking under it. 903 + the footer's own 194 is 1097 —
-   the frame's height to the pixel. */
 .page:has(> .wk){ padding-bottom:0 }
 .wk__st{ position:absolute; display:block; max-width:none }
 .wk__st--muscle{ left:683px; top:0;    width:241px; height:258px }
@@ -115,25 +39,16 @@
 .wk__st--figure{ left:527px; top:19px; width:149px; height:227px }
 .wk__st--manga { left:311px; top:40px; width:197px; height:225px }
 .wk__st--chibi { left:-5px;  top:56px; width:236px; height:207px }
-/* the rules, drawn again over the top. The block begins at y 662 and the
-   pattern runs from 77 every 15, and 662 − 77 is a whole number of 15s, so a
-   rule lands on this block's first row and the repeat needs no offset. */
 .wk__stickers::after{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
   background:
     repeating-linear-gradient(var(--grid-line) 0 1px, transparent 1px var(--grid-step)),
     repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-step));
 }
-
-/* ------------------------------------------------------------ responsive --- */
 @media (max-width:1000px){
   .wk__grid{ padding-left:0 }
   .wk__row{ flex-wrap:wrap; gap:24px; justify-content:center }
   .wk__row + .wk__row{ margin-top:24px }
-  /* the stickers are placed by hand for a 960 column; below it they would
-     collide, so the strip steps aside rather than being redrawn */
   .wk__stickers{ display:none }
-  /* and with the strip gone there is nothing tucking under the footer, so the
-     page takes back the gap every other page leaves above it */
   .page:has(> .wk){ padding-bottom:118px }
 }

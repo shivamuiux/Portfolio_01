@@ -1,50 +1,15 @@
-/* ==========================================================================
-   NIVIA — brand identity. Figma › Nivia branding (4167:4118), 1440 × 14468.
-
-   The frame around this page (column, grid, rules, navbar, revealed footer,
-   cursor) is the shell's. Everything here is the page's own content at the
-   Figma measurements: each section's margin-top is the gap the design leaves
-   above it, so the whole 14468px rhythm is reproduced without pinning
-   anything to an absolute offset.
-
-   What is flat in Figma is flat here, and nothing else is. The photographic
-   boards — the mockups, the billboards, apparel, packaging, posters — are
-   photographs, so they come across as the design's own renders. Everything
-   that Figma draws as text, colour or vector is drawn that way here too: the
-   two logo studies with their dashed construction lines, the four lockups, the
-   palette with its hexes, the type specimen, the scale, and the three value
-   cards, whose photographs are pictures but whose words are words.
-   ========================================================================== */
-
-/* This page's 15px rules start at y 84, the same as the FAIR page's; the home
-   page's start at 76. The shell reads this and shifts the whole grid. */
 :root{ --grid-phase:8px }
-
-.nv{ padding-bottom:24px }     /* 142px sits under the last section (14132 → 14274) */
-
-/* ------------------------------------------------------------- shared ----- */
-/* wrapped in :where() so it carries almost no weight and never eats a margin
-   set below, or .col's own centring */
+.nv{ padding-bottom:24px }
 :where(.nv) :where(h2,h3,p,b,span,div){ margin:0 }
-
-/* the page's default paragraph, wrapped in :where() so it carries almost no
-   weight — a plain `.nv p` outranks a single class and would quietly swallow
-   the specimen's 212px and every size the scale board sets */
 :where(.nv) p{
   font-family:var(--font-body); font-weight:400; font-size:16px;
   line-height:21px; color:#fff;
 }
-
-/* the label band — 960 × 29 on #0d0f0d, the text 29px in, as on every case
-   study in this set */
 .nv .band{
   height:29px; background:#0d0f0d;
   display:flex; align-items:center; padding-left:29px;
   font-family:var(--font-body); font-weight:500; font-size:16px; color:#fff;
 }
-
-/* a board the artwork has not been fetched for: olive, labelled, the size of
-   the picture that belongs there */
 .nv .ph{
   width:100%; height:var(--h,479px);
   background:var(--ticker-card);
@@ -52,21 +17,13 @@
   font-family:var(--font-body); font-weight:400; font-size:16px; color:#fff;
   text-align:center;
 }
-/* a real render brings its own ground and fills its box exactly */
 .nv img.ph{ background:none; object-fit:cover; display:block }
-
-/* --------------------------------------------------------- the standfirst - */
-/* Exposure at 32/38, two lines, 29px inside the column */
-.nv__lede{ margin-top:96px; padding-left:var(--pad) }     /* 158 − 62 */
+.nv__lede{ margin-top:96px; padding-left:var(--pad) }
 .nv__lede h3{
   width:720px; max-width:100%;
   font-family:var(--font-display); font-weight:400;
   font-size:32px; line-height:38px; color:#fff;
 }
-
-/* ------------------------------------------- mission, vision and values --- */
-/* three 960 × 74 bars on the panel colour, the pair of lines centred in each
-   and set 30px in: the label in medium, the sentence under it */
 .nv__bar{ height:74px; background:#141814; display:flex; align-items:center }
 .nv__bar > div{
   padding-left:30px; width:705px; max-width:100%;
@@ -80,15 +37,11 @@
   font-family:var(--font-body); font-weight:400; font-size:16px;
   line-height:21px; color:#fff;
 }
-
-/* the three value cards, 269 × 464 and 46 apart, inset 30 */
 .nv__values{ display:flex; gap:46px; padding-left:30px; height:464px }
 .nv__value{
   position:relative; width:269px; height:464px; flex:0 0 auto;
   background:#035537; overflow:hidden;
 }
-/* written through the parent so it outranks the generic .nv .ph box, which
-   would otherwise stretch the photograph over the whole card */
 .nv__values .nv__value-img{
   position:absolute; left:50%; translate:-50% 0; top:0;
   width:270px; height:264px;
@@ -101,30 +54,11 @@
   font-family:var(--font-body); font-size:16px; line-height:normal; color:#fff;
 }
 .nv__value-copy p:first-child{ font-weight:500; text-transform:uppercase }
-
-/* --------------------------------------------------- the rebuilt boards --- */
-/* These four are not pictures in Figma and are not pictures here: colour
-   chips, lockups, a type specimen and the scale. Every value below is the
-   design's own — the palette's four hexes, the 456 x 298 tile at 16 / 488 and
-   16 / 330, the mark at 163 x 103.731 sitting at 146 / 97, Saira at the sizes
-   the specimen names. */
 .nv__board{ position:relative; height:644px; background:#141814; overflow:hidden }
-/* the wrapper the script makes: the board at its drawn size, scaled to the
-   column. transform-origin is the top left so the scale reads as a reduction
-   of the whole board rather than a zoom about its middle. */
 .nv__board-in{ position:relative; width:960px; height:100%; transform-origin:0 0 }
-
-/* the mark, drawn from the one path the design uses, coloured by CSS */
 .nv__mark{ width:163.002px; height:103.731px; display:block; color:inherit }
-
-/* ---- the symbol's idea ---- */
-/* Figma 4191:516 — a 237 x 77 block at 30 / 24, both lines flush left inside
-   it. (The design's own left is written as calc(50% - 331.5px) against a
-   -translate-x-1/2, which resolves to exactly 30.) */
 .nv__idea-head{ position:absolute; left:30px; top:24px; width:237px;
                 display:flex; flex-direction:column; gap:4px }
-/* both lines are set to the width of their own box in the design, so they are
-   held on one line rather than left to wrap on a rounding difference */
 .nv__idea-head p{ font-family:var(--font-body); font-weight:400; font-size:16px;
                   line-height:21px; color:#fff; white-space:nowrap }
 .nv__idea-claim{ font-weight:600 !important; font-size:20px !important;
@@ -138,11 +72,6 @@
 }
 .nv__idea-l{ left:30px;  width:342px }
 .nv__idea-r{ left:584px; width:326px }
-
-/* ---- the twin slopes ---- */
-/* descendant, not child: board-fit.js moves a board's children into a
-   .nv__board-in wrapper, so a child combinator here stops matching the
-   moment the board is fitted — which is always. */
 .nv__mark-board svg{ position:absolute; display:block }
 .nv__mb-ghost{ width:776.247px; height:644px; top:0 }
 .nv__mb-ghost--l{ left:-361px }
@@ -152,14 +81,6 @@
 .nv__mb-guides{ left:316px; top:50%; translate:0 -50%;
                 width:309.656px; height:644px }
 .nv__mb-slopes{ left:411.71px; top:202.14px; width:138.002px; height:192.004px }
-
-/* The notes lean with the slopes: 18 degrees, as the design shears them.
-   Figma reports each note's *sheared* box — 402.218 wide for a text column
-   that is 371.316 wide before the shear, the difference being exactly the
-   95.106 of height times tan 18. So the unsheared width is the reported one
-   less 30.9, and the unsheared left is the reported one *minus* half of that
-   — checked against Figma's own render of the board rather than derived, the
-   two agreeing on every line to within a pixel. */
 .nv__mb-note{
   position:absolute; font-family:Saira,var(--font-body); font-weight:300;
   font-size:16px; line-height:23.776px; color:#fff;
@@ -170,8 +91,6 @@
 .nv__mb-note--b{ left:27.85px;  top:393px; width:359.395px }
 .nv__mb-note--c{ left:564.73px; top:202px; width:366.861px }
 .nv__mb-note--d{ left:490.45px; top:394px; width:424.944px }
-
-/* ---- lockups ---- */
 .nv__lockups .nv__tile{
   position:absolute; width:456px; height:298px; overflow:hidden;
   display:grid; place-items:center;
@@ -182,15 +101,9 @@
 .nv__lockups .nv__tile:nth-child(4){ left:488px; top:330px }
 .nv__tile--ink  { background:#000;     color:#faf7f0 }
 .nv__tile--paper{ background:#faf7f0;  color:#16181c }
-/* the mark sits at 146 / 97 in a plain tile, not dead centre */
 .nv__lockups .nv__tile > .nv__mark{ position:absolute; left:146px; top:97px }
-
-/* the lockup: mark and wordmark, the wordmark sheared 7 degrees as drawn */
 .nv__lock{ display:flex; align-items:center }
 .nv__lock .nv__mark{ width:95.855px; height:61px; margin-right:-6px; flex:0 0 auto }
-/* Figma gives the wordmark a 223.624 x 119.106 box with the letters centred
-   in it, and only then shears the box. Without that box the word butts
-   straight up against the mark instead of tucking behind it by six pixels. */
 .nv__lock em{
   width:223.624px; height:119.106px; flex:0 0 auto;
   display:flex; align-items:center; justify-content:center;
@@ -198,8 +111,6 @@
   font-size:76px; line-height:normal; letter-spacing:0;
   transform:skewX(-7deg) scaleY(.99); transform-origin:center;
 }
-
-/* ---- colour ---- */
 .nv__colour .nv__chip{
   position:absolute; width:456px; height:298px; overflow:hidden;
   background:var(--c); color:#fff;
@@ -208,7 +119,6 @@
 .nv__colour .nv__chip:nth-child(2){ left:16px;  top:330px }
 .nv__colour .nv__chip:nth-child(3){ left:488px; top:16px }
 .nv__colour .nv__chip:nth-child(4){ left:488px; top:330px }
-/* written through the parent so it outranks the chip's own white */
 .nv__colour .nv__chip--dark{ color:#16181c }
 .nv__chip .nv__mark{ position:absolute; left:146px; top:97px }
 .nv__chip ul{
@@ -222,8 +132,6 @@
   font-family:Saira,var(--font-body); font-weight:400; font-size:12px;
   line-height:normal; white-space:pre;
 }
-
-/* ---- the specimen ---- */
 .nv__type-meta{ position:absolute; left:30px; top:30px }
 .nv__type-meta p{
   font-family:var(--font-body); font-size:16px; font-weight:500;
@@ -250,8 +158,6 @@
 }
 .nv__type-lc{ letter-spacing:4.16px !important }
 .nv__type-set .nv__dim{ color:rgba(255,255,255,.4) }
-
-/* ---- the scale ---- */
 .nv__hier{ height:780px }
 .nv__hier-label{
   position:absolute; left:30px; top:22px;
@@ -290,48 +196,24 @@
   width:347px; font-family:Saira,var(--font-body); font-weight:400;
   font-size:14px; line-height:normal; color:#fff;
 }
-
-/* ------------------------------------------------------------- the boards - */
-/* Each is one render at the size the design draws it. The widths that are not
-   960 are the design's own: three of the digital boards are 958 and sit a
-   pixel inside the column. */
 .nv__slot--stories .ph,
 .nv__slot--social  .ph,
 .nv__slot--site    .ph{ width:958px; max-width:100%; margin-left:1px }
-
 .nv__pair{ display:flex; gap:31px; height:479px }
 .nv__pair .ph{ height:479px; flex:0 0 auto }
 .nv__pair .ph:first-child{ width:464px }
 .nv__pair .ph:last-child { width:465px }
-
-/* ------------------------------------------------------------ the close --- */
 .nv__close{ position:relative; padding-left:var(--pad); height:294px;
             display:flex; flex-direction:column; gap:42px }
 .nv__close > div{ width:601px; max-width:100% }
 .nv__close p + p{ margin-top:21px }
 .nv__close b{ font-weight:500 }
-/* The sticker is a floating node in the design, not part of the results
-   frame — and it is turned, which is the trap here. Figma reports its
-   *rotated* box, 253.423 x 277.654 at 893.6 / 13930.33 on the page, and
-   reading that as the picture's own size draws it half again too large. The
-   picture is 180.53 x 225.57 turned 22.63 degrees: those two give the
-   reported box back exactly (180.53 cos + 225.57 sin = 253.42, and
-   180.53 sin + 225.57 cos = 277.67), and they put the same 165 x 189 of ink
-   on the page that Figma's own render does.
-
-   So it is placed by its centre — the centre of that rotated box, 780.31 /
-   231.16 from this section's top left — and turned about it. */
 .nv__close .nv__sticker{
   position:absolute; left:780.31px; top:162.16px;
   width:180.53px; height:225.57px;
   translate:-50% -50%; rotate:-22.63deg;
   background:none; font-size:0; pointer-events:none;
 }
-
-/* ======================= the gaps the design leaves ======================= */
-/* Read top to bottom this is the page's rhythm: the number is the distance
-   from the bottom of the section above to the top of this one, straight off
-   the Figma frame. */
 .nv__lede            + .nv__slot--main      { margin-top:31px }
 .nv__slot--main      + .nv__bar--first      { margin-top:42px }
 .nv__bar             + .nv__bar             { margin-top:16px }
@@ -354,13 +236,6 @@
 .nv__pack            + .nv__pack            { margin-top:46px }
 .nv__pack            + .band                { margin-top:61px }
 .band                + .nv__close           { margin-top:44px }
-
-/* ------------------------------------------------------- image reveal ----- */
-/* The same arrival the HostelHive page uses: masked to nothing along its own
-   bottom edge, 18px low and transparent, opening upward as it comes into
-   view. A mask rather than a clip-path, because an IntersectionObserver
-   measures a target after its clipping is applied and a clipped picture would
-   never be able to trigger itself. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference){
   .nv__reveal{
     opacity:0; translate:0 18px;
@@ -383,18 +258,13 @@
       mask-size         900ms var(--reveal-ease) var(--reveal-delay,0ms);
   }
 }
-
-/* ============================== narrow ==================================== */
 @media (max-width:1000px){
   .nv__lede h3{ width:auto; font-size:min(6vw,32px); line-height:1.2 }
-
   .nv__bar{ height:auto; padding:16px 0 }
   .nv__bar > div{ width:auto; padding-right:var(--pad) }
-
   .nv__values{ flex-wrap:wrap; gap:16px; padding-left:var(--pad);
                padding-right:var(--pad); height:auto }
   .nv__values .ph{ width:100%; height:min(120vw,464px) }
-
   .nv .ph{ height:auto; aspect-ratio:var(--ar,960 / 479) }
   .nv__slot--main      .ph{ --ar:960 / 393 }
   .nv__slot--idea      .ph,
@@ -407,21 +277,12 @@
   .nv__slot--stories .ph,
   .nv__slot--social  .ph,
   .nv__slot--site    .ph{ width:100%; margin-left:0 }
-
   .nv__pair{ flex-direction:column; gap:16px; height:auto }
   .nv__pair .ph,
   .nv__pair .ph:first-child,
   .nv__pair .ph:last-child{ width:100%; height:auto; aspect-ratio:464 / 479 }
-
   .nv__close{ height:auto; padding-right:var(--pad) }
   .nv__close > div{ width:auto }
-  /* narrow: there is no room beside the text, so the sticker comes back into
-     the flow and sits off the right edge under it, keeping the design's own
-     size and tilt. The margins are the room the turn needs — a 180.53 x
-     225.57 picture at 22.63 degrees sweeps 253 x 278 — so it never reaches
-     the edge of the page. The aspect has to be restated here: the generic
-     .nv .ph rule above sets a landscape ratio at the same weight and later
-     in the file. */
   .nv__close .nv__sticker{
     position:static; align-self:flex-end;
     width:min(180.53px, 46%); height:auto;

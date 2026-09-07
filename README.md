@@ -24,6 +24,32 @@ written once. A visitor downloads those and `media/` on the first page and gets
 them from cache on every page after — which is why a project page costs about
 5 KB rather than two megabytes.
 
+**What loads when.** A case study is ten to fifteen thousand pixels tall, and
+every picture in it used to be fetched the moment the page opened — a megabyte
+and a half of HostelHive arriving while the stylesheet was still being parsed,
+for a screen that shows two of them. Everything below the fold is marked lazy
+now and arrives as it is scrolled towards; the handful that are above it are
+named in `EAGER` in build.py, measured by `vfold.mjs`, and have to be revisited
+if a hero ever moves. The project cards are left alone: every layer of them is
+above the fold on both pages that carry them.
+
+The one place lazy loading does not work by itself is HostelHive's conveyor,
+because most of a belt sits far off to the *right* of the viewport rather than
+below it, so it would never be reached. `hand-stage.js` switches those images
+to eager the first time the stage comes into view — the same trade as the
+animation it already governs. `vlazy.mjs` is what proves the whole thing: it
+scrolls each case study at a reader's pace and fails if any picture is still
+blank when it is on screen, or never loads at all.
+
+The sources under `src/` are heavily commented — nearly half of some
+stylesheets is prose explaining why a number is what it is — and none of that
+needs to reach a visitor, so `build.py` strips comments and blank lines out of
+the CSS and JS it writes into `assets/`. It removes those and nothing else: no
+renaming, no reordering, no minifying. `vstrip.py` proves it, by minifying each
+file before and after with a real parser and requiring the two results to come
+out byte for byte identical. Read the commented version in `src/`; the one in
+`assets/` is the same code with the prose taken out.
+
 ---
 
 ## Publishing on GitHub Pages
@@ -120,7 +146,7 @@ a copy that did not happen.
 
 **Where it says so.** In the corner of the window, never next to the button. A
 single `.toast`, built once by the shell and shared by everything that copies,
-appears in the bottom left, holds for a second and goes. Nothing on the page
+appears in the bottom right, holds for a second and goes. Nothing on the page
 moves for it. The first version put an `aria-live` span inside the button's own
 wrapper, relying on a `.sr` class that is only defined in the home page's scene
 stylesheet — so on every other page the sentence rendered as ordinary visible
@@ -253,7 +279,11 @@ pictures and words swapped, in `make_card()`.
 
 Touch gloves, PC Builder, Glassbeams and Service club have no `href` at all —
 not a live link painted over, so there is nothing to open in a new tab and
-nothing to tab to — and they carry the "coming soon" cursor. The other four open
+nothing to tab to — and they carry the "coming soon" cursor. Nor is there a
+page behind any of them: Service club used to have one, built from the empty
+template and reachable only by a search engine that had found it, and it is not
+built any more. Write the case study, add the entry back to `PAGES` with its own
+body file, and give the card an `href` — three changes, in that order. The other four open
 their case study in a tab of its own (`target="_blank"`, and `rel="noopener"`
 with it, so the opened page gets no handle on this one), which is set in one
 place, `CARD_TARGET`, for both pages.

@@ -1,65 +1,25 @@
-/* ==========================================================================
-   HOSTELHIVE — case study. Figma › Hostel hive (4088:1409), 1440 × 8777.
-
-   Same arrangement as the FAIR page: the frame around this one (column, grid,
-   rules, navbar, revealed footer, cursor) belongs to the shell, and everything
-   here is the page's own content at the Figma measurements. Each section's
-   margin-top is the gap the design leaves above it, so the whole 8777px
-   rhythm is reproduced without pinning anything to an absolute offset, and
-   each block that the design gives a fixed height keeps it, so the rhythm
-   holds even where a fallback face measures a little wider than Geist.
-
-   Where the design leaves an image slot empty it draws an olive block with a
-   label in it; those are reproduced exactly, so an unfinished slot reads the
-   same here as it does in Figma.
-   ========================================================================== */
-
-/* This page's 15px rules start at y 77; the home page's start at 76. The shell
-   reads this and shifts the whole grid, which is what puts the band edges and
-   the text baselines back on the lines the design has them on. */
 :root{ --grid-phase:1px }
-
 .hh{
-  padding-bottom:55px;          /* 173px sits under the last section (8320 → 8493) */
-  --orange:#fb4102;             /* the product's accent, on the stat and problem cards */
-  --panel:#141814;              /* the hero panel and the two insight cards */
-  --sunk:#0d0f0d;               /* the label bands and the two meta cards */
-  --dot:#1fe900;                /* the marker in the insight cards */
+  padding-bottom:55px;
+  --orange:#fb4102;
+  --panel:#141814;
+  --sunk:#0d0f0d;
+  --dot:#1fe900;
 }
-
-/* ------------------------------------------------------------- shared ----- */
-/* The margin reset is wrapped in :where() so it carries almost no weight. A
-   plain `.hh p` reset outranks a single class, which would silently swallow
-   `.col`'s own centring on the bands, and every margin this file sets on a
-   paragraph or a list — the kind of bug that only shows up as a gap quietly
-   missing. This way anything else always wins. */
 :where(.hh) :where(h2,h3,h4,h5,p,ul,li,dl,dd,dt,q){ margin:0 }
-/* and a list's own 40px indent, which the design never uses: it is what was
-   pushing the problem cards and the insight bullets off the text above them */
 :where(.hh) :where(ul){ padding:0 }
-
 .hh p, .hh li{
   font-family:var(--font-body); font-weight:400; font-size:16px;
   line-height:21px; color:#fff;
 }
-
-/* the label band — 960 × 29 on #0d0f0d, the text 29px in, exactly as the
-   FAIR page draws it */
 .hh .band{
   height:29px; background:var(--sunk);
   display:flex; align-items:center; padding-left:29px;
   font-family:var(--font-body); font-weight:500; font-size:16px; color:#fff;
 }
-
-/* Every measure in the design starts 29px inside the column and runs 601px.
-   The section itself stays the full 960 so it keeps the column's own centring;
-   it is the paragraphs that are narrow. */
 .hh__copy{ padding-left:var(--pad) }
 .hh__copy p{ width:601px; max-width:100% }
-.hh__copy p + p{ margin-top:21px }     /* the design's blank line between paragraphs */
-
-/* an image the design has not placed yet: olive, labelled, the size of the
-   picture that belongs there */
+.hh__copy p + p{ margin-top:21px }
 .hh .ph{
   width:100%; height:var(--h,344px);
   background:var(--ticker-card);
@@ -67,46 +27,18 @@
   font-family:var(--font-body); font-weight:400; font-size:16px;
   line-height:21px; color:#fff; text-align:center;
 }
-.hh img.ph{ object-fit:contain; background:none }   /* an export brings its own ground */
-/* The diagrams have to be shown whole, so they are contained and centred. The
-   photograph under the problem section is the exception: it is a 16:9 picture
-   in a 960 x 419 slot, and it fills the slot rather than sitting in the middle
-   of it with a hundred pixels of dark either side. */
+.hh img.ph{ object-fit:contain; background:none }
 .hh__slot--result img.ph{ object-fit:cover }
-
-/* ------------------------------------------------------- image reveal ----- */
-/* Each picture is masked down to nothing along its own bottom edge, sits 18px
-   low and is transparent; when it comes into view the mask opens upward while
-   the picture rises the last few pixels and fades up.
-
-   The reveal is a mask rather than a clip-path on purpose. An
-   IntersectionObserver measures a target after its clipping is applied, so a
-   picture hidden with `clip-path` reports an empty intersection rectangle and
-   never triggers itself — the observer would have to watch something else. A
-   mask is not clipping: the geometry stays whole, so each picture can be
-   watched directly and comes in on its own arrival, which is the point.
-
-   The slide is `translate`, not `transform`: several of these pictures already
-   carry a centring transform of their own, and `translate` composes with it
-   instead of overwriting it.
-
-   The whole thing is behind `scripting: enabled`, so if the script never runs
-   — or the browser cannot answer that query — the pictures are simply there.
-   The sticker in the key takeaways is deliberately not in this set. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference){
   .hh__reveal{
     opacity:0; translate:0 18px;
     -webkit-mask-image:linear-gradient(#000 0 100%);
             mask-image:linear-gradient(#000 0 100%);
     -webkit-mask-repeat:no-repeat;   mask-repeat:no-repeat;
-    -webkit-mask-position:0 100%;    mask-position:0 100%;   /* held at the foot */
+    -webkit-mask-position:0 100%;    mask-position:0 100%;
     -webkit-mask-size:100% 0%;       mask-size:100% 0%;
     will-change:opacity, translate, mask-size;
   }
-  /* The shell's --ease-out is very front-loaded — four fifths of the travel in
-     the first third — which is right for a control answering a click but hides
-     the wipe. The reveal gets a gentler curve of its own so the mask is
-     actually seen crossing the picture. */
   .hh__reveal.is-in{
     opacity:1; translate:none;
     -webkit-mask-size:100% 100%;     mask-size:100% 100%;
@@ -119,12 +51,8 @@
       mask-size         900ms var(--reveal-ease) var(--reveal-delay,0ms);
   }
 }
-
-/* ------------------------------------------------------------ the hero ---- */
-/* 960 × 389 panel: the wordmark and its mascot on the left, the splash screen
-   on the right, both centred on the panel's own middle */
 .hh__hero{
-  margin-top:61px;                     /* 123 − 62 */
+  margin-top:61px;
   position:relative; height:389px; background:var(--panel); overflow:hidden;
 }
 .hh__mark{
@@ -141,17 +69,12 @@
   position:absolute; left:655px; top:50%; transform:translateY(-50%);
   width:174px; height:356px; font-size:0;
 }
-
-/* --------------------------------------------------------- the overview --- */
 .hh__overview{ position:relative; height:356px; padding-left:var(--pad) }
 .hh__overview h3{
   font-family:var(--font-display); font-weight:400;
   font-size:32px; line-height:38px; color:#fff;
 }
 .hh__overview .hh__copy{ padding-left:0; margin-top:28px; width:601px }
-
-/* the two meta cards: 254 wide, 31 apart, their column 31px in from the
-   column's right edge and starting 121px down the section */
 .hh__meta{
   position:absolute; right:31px; top:121px;
   display:flex; flex-direction:column; gap:31px;
@@ -167,32 +90,20 @@
   font-family:var(--font-body); font-weight:300; font-size:14px;
   line-height:17px; color:rgba(255,255,255,.6);
 }
-/* the three faces, 30px each, overlapping by 4 and ringed in white */
 .hh__faces{ position:absolute; left:160px; top:47px; display:flex; align-items:center }
-/* the three ringed faces come across as one 82 × 30 strip, rings and
-   overlap included */
 .hh__faces .ph{ width:82px; height:30px; font-size:0 }
-
-/* ---------------------------------------------------------- the problem --- */
 .hh__problem{ padding-left:var(--pad); height:211px }
 .hh__lead{ width:825px; max-width:100% }
 .hh__lead b{ font-weight:500; color:var(--orange) }
 .hh__creates{ margin-top:33px }
-
 .hh__cards{ display:flex; gap:32px; margin-top:26px }
 .hh__cards li{
   list-style:none; width:254px; height:89px; background:var(--orange);
   padding:12px; font-weight:600;
 }
-/* the design gives the third card's text a 208px measure, so it breaks after
-   "challenges for" rather than running to the card's edge */
 .hh__cards li:nth-child(3){ padding-right:34px }
-
 .hh__result{ padding-left:var(--pad); height:42px }
 .hh__result p{ width:601px; max-width:100% }
-
-/* --------------------------------------------------------- the research --- */
-/* the four counts, 30px in — 254 / 224 / 194 / 119 wide, 31 apart */
 .hh__stats{ display:flex; gap:31px; padding-left:30px; height:89px }
 .hh__stats li{
   list-style:none; position:relative; height:89px; background:var(--orange);
@@ -212,8 +123,6 @@
   font-family:var(--font-body); font-weight:500; font-size:14px; line-height:17px;
   color:#fff; white-space:nowrap;
 }
-
-/* the two dark insight cards, 374 wide and 151 apart, inset 30 */
 .hh__insight{ display:flex; gap:151px; padding-left:30px }
 .hh__insight article{
   width:374px; height:419px; background:var(--panel);
@@ -227,42 +136,17 @@
 .hh__insight ul{ position:absolute; left:26px; top:77px; width:321px;
                  display:flex; flex-direction:column; gap:32px }
 .hh__insight li{ list-style:none; position:relative; padding-left:24px; width:321px;
-                 line-height:20px }   /* eight lines fill the 160px block exactly */
-.hh__insight li:nth-child(3){ width:298px }       /* the design narrows the third one */
- /* the design draws this as a 20 × 20 icon holding a 10px disc, with the text
-    24px from the icon's left edge — so the disc sits 5px in, not flush */
+                 line-height:20px }
+.hh__insight li:nth-child(3){ width:298px }
 .hh__insight li::before{
   content:""; position:absolute; left:5px; top:5px;
   width:10px; height:10px; border-radius:50%; background:var(--dot);
 }
-
-/* ---------------------------------------------------------- the process --- */
 .hh__process{ padding-left:var(--pad); height:147px }
 .hh__process p{ width:615px; max-width:100% }
 .hh__process p + p{ margin-top:21px }
-
-/* the two behavioural archetypes — single artworks, 374 × 426, 46 apart,
-   inset 30, exactly as the design places them */
 .hh__personas{ display:flex; gap:46px; padding-left:30px; height:426px }
-/* written through the parent so it outranks the generic .hh .ph box */
 .hh__personas .hh__persona{ width:374px; height:426px; flex:0 0 auto }
-
-/* ------------------------------------------------------- ecosystem map ---- */
-/* The design leaves a 960 × 419 slot here. What goes in it is the ecosystem
-   prototype itself, and a radial map of thirteen categories does not survive
-   being squeezed to 419px — its labels would come out under 4px. So this one
-   block is given the height the map actually needs. Everything below it
-   therefore sits lower than the Figma frame by that difference; every other
-   section is on its own Figma y to the pixel.
-
-   The prototype switches to a stacked, scrollable layout under 1024px, so it
-   is always rendered at its full 1180px width and scaled down to whatever the
-   column is — which keeps the whole wheel and its labels, and makes the frame
-   as tall as it needs to be. The script does the arithmetic; these values are
-   what it lands on in the 960 column, so the page is right before it runs. */
-/* 799 is the map in a 960 column; the 10px under it is what keeps the block's
-   height congruent with the 419 the design drew, so everything below stays on
-   the same rules. The script recomputes both at any other width. */
 .hh__eco{ padding-bottom:10px }
 .hh__eco-frame{
   position:relative; width:100%; height:799px;
@@ -270,56 +154,26 @@
 }
 .hh__eco-frame iframe{
   position:absolute; left:0; top:0; border:0; display:block;
-  width:1180px; height:982px;                 /* the prototype's own full size */
+  width:1180px; height:982px;
   transform-origin:0 0; transform:scale(.813559);
 }
-
-/* three blocks in a 960 × 599 field: one tall on the left, two stacked on the
-   right, 16px between them and 16px of field around them */
 .hh__ia{ height:597px; padding:16px 16px 14px;
          display:grid; grid-template-columns:458px 454px; gap:16px }
 .hh__ia .ph{ height:100% }
 .hh__ia-right{ display:grid; grid-template-rows:1fr 1fr; gap:16px }
-
-/* ---------------------------------------------------- the final product --- */
 .hh__final{ padding-left:var(--pad); height:60px }
 .hh__final p{ width:601px; max-width:100% }
-
-/* ------------------------------------------- the final-product stage ------ */
-/* One conveyor, two belts, both sliding left to right in step.
-
-   Underneath, the wireframes. Above them, the finished screens — same
-   geometry, same animation, but masked so they are only painted on the right
-   half of the stage. Over the seam sits the hand-held phone. A screen
-   therefore travels in as a wireframe, disappears behind the phone, and
-   reappears on the other side rendered: the phone looks like it is doing the
-   converting, which is the whole trick.
-
-   Both belts hold their sequence twice and slide by exactly half their own
-   width, so the loop closes on itself with no jump.
-
-   Every size is a fraction of the stage's height, so the whole thing scales
-   as one when the column narrows. The desktop height stays exactly the 659px
-   the design draws, which is what keeps the page below it on its rules.
-
-   The numbers below are measured off hostel_hand_mock.png (1290 x 2066): the
-   lit screen sits at x 147..676, y 232..1356, so its centre is at 31.899% and
-   38.432% of the artwork and it is 54.453% of the artwork's height. Everything
-   here is pinned to that screen rather than to the picture's own box, because
-   the hand runs off to the right and down — centring the box would leave the
-   screen up and to the left of where it should be. */
 .hh__stage{
   --h:659px;
-  --hand-w:.73596;        /* the artwork, as a fraction of the stage's height */
+  --hand-w:.73596;
   --hand-h:1.17869;
-  --screen-h:.64183;      /* the lit screen inside it: 423 at 659 */
-  --card-w:.27932;        /* a belt card, matched to that screen's height */
+  --screen-h:.64183;
+  --card-w:.27932;
   position:relative; height:var(--h); overflow:hidden;
   background:var(--panel);
 }
 .hh__belt{ position:absolute; inset:0; display:flex; align-items:center }
 .hh__belt--wire{ z-index:0 }
-/* the coloured belt exists only past the middle; the hand covers the join */
 .hh__belt--ui{
   z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent 0 49.4%,#000 50.6% 100%);
@@ -327,16 +181,13 @@
 }
 .hh__run{
   display:flex; flex:0 0 auto; align-items:center;
-  gap:calc(var(--h) * .04856);                       /* 32 at 659 */
-  padding-right:calc(var(--h) * .04856);             /* so the seam keeps the gap */
+  gap:calc(var(--h) * .04856);
+  padding-right:calc(var(--h) * .04856);
   will-change:transform;
   animation:hh-belt 34s linear infinite;
-  animation-play-state:paused;                       /* until the stage is seen */
+  animation-play-state:paused;
 }
 .hh__stage.is-running .hh__run{ animation-play-state:running }
-/* the cards are exactly as tall as the phone's screen and centred on the same
-   line, so a card passing behind the phone is covered end to end — its top and
-   bottom edges land inside the bezel rather than poking past it */
 .hh__run img{
   flex:0 0 auto; display:block;
   height:calc(var(--h) * var(--screen-h));
@@ -346,10 +197,6 @@
   from{ transform:translate3d(-50%,0,0) }
   to  { transform:translate3d(0,0,0) }
 }
-/* Not -50% -50%. The translate is the screen's own position inside the
-   artwork, so it is the screen — not the picture — that lands on the stage's
-   centre; the hand is then free to run off to the right and off the bottom the
-   way it does in the photograph. */
 .hh__hand{
   position:absolute; left:50%; top:50%; z-index:2;
   translate:-31.899% -38.432%;
@@ -357,13 +204,9 @@
   height:calc(var(--h) * var(--hand-h));
   pointer-events:none; user-select:none;
 }
-
-/* still, and readable, for anyone who asked for less motion */
 @media (prefers-reduced-motion:reduce){
   .hh__run{ animation:none; transform:translate3d(-50%,0,0) }
 }
-
-/* --------------------------------------------------------- takeaways ------ */
 .hh__takeaways{ padding-left:28px; display:flex; align-items:center; gap:41px;
                 height:294px }
 .hh__takeaways ul{ width:591px; padding-left:24px }
@@ -375,11 +218,6 @@
   width:227px; height:179px; font-size:0; background:none;
   transform:rotate(-10.39deg);
 }
-
-/* ======================= the gaps the design leaves ======================= */
-/* Read top to bottom this is the page's rhythm: the number is the distance
-   from the bottom of the section above to the top of this one, straight off
-   the Figma frame. */
 .hh__hero              + .band                    { margin-top:61px }
 .band                  + .hh__overview            { margin-top:30px }
 .hh__overview          + .band                    { margin-top:80px }
@@ -404,33 +242,23 @@
 .hh__final             + .hh__slot--final         { margin-top:62px }
 .hh__slot--final       + .band                    { margin-top:106px }
 .band                  + .hh__takeaways           { margin-top:59px }
-
-/* the copy blocks the design gives a fixed height */
-/* The copy blocks the design gives a fixed height. Three of them hold their
-   paragraph 4px down from the block's own top — that is the nudge that puts
-   the first line back on a rule — so the inset is kept rather than flattened. */
 .hh__copy--archetypes  { height:61px }
 .hh__copy--matrix      { height:180px; padding-top:4px }
 .hh__copy--ia          { height:180px; padding-top:4px }
-
-/* ============================== narrow ==================================== */
 @media (max-width:1000px){
   .hh__hero{ height:auto; padding:40px 0 }
   .hh__mark{ position:static; transform:none; margin-left:var(--pad) }
   .hh__mark span{ font-size:min(13vw,72px) }
   .hh__mark .ph{ width:min(17vw,96px); height:min(17vw,96px) }
   .hh__phone.ph{ position:static; transform:none; margin:32px auto 0 }
-
   .hh__overview{ height:auto; padding-bottom:8px }
   .hh__overview .hh__copy{ width:auto }
   .hh__meta{ position:static; margin-top:32px; flex-direction:row; flex-wrap:wrap }
-
   .hh__problem, .hh__result, .hh__process, .hh__final,
   .hh__copy, .hh__copy--archetypes,
   .hh__copy--matrix, .hh__copy--ia, .hh__takeaways{ height:auto }
   .hh__lead,
   .hh__copy p, .hh__result p, .hh__process p, .hh__final p{ width:auto }
-
   .hh__cards, .hh__stats, .hh__insight, .hh__personas{
     flex-wrap:wrap; gap:16px; padding-left:var(--pad); height:auto;
   }
@@ -445,17 +273,12 @@
   .hh__insight h4{ margin-left:24px }
   .hh__insight ul{ margin:24px 24px 0 26px; width:auto }
   .hh__insight li{ width:auto }
-
   .hh__ia{ height:auto; grid-template-columns:1fr; padding:0; gap:16px }
   .hh__ia .ph{ height:min(60vw,567px) }
   .hh__ia-right{ grid-template-rows:auto auto }
   .hh__ia-right .ph{ height:min(34vw,275px) }
-
-  /* the stage keeps its proportions; only its height follows the column */
   .hh__stage{ --h:min(84vw, 659px) }
-
   .hh__takeaways{ flex-direction:column; align-items:flex-start; padding-left:var(--pad) }
   .hh__takeaways ul{ width:auto }
-
   .hh .ph{ height:min(38vw,var(--h,344px)) }
 }

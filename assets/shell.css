@@ -1,163 +1,90 @@
-/* ==========================================================================
-   SHELL — everything every page shares: the tokens, the 960 column and its
-   rules, the 15px grid, the sticky navbar, the revealed footer, the cursor.
-   Page-specific styles live beside the page that uses them.
-   ========================================================================== */
-/* ==========================================================================
-   HOME PAGE — Figma › Projectss › "Home Page " (3792:393), 1440 × 2310
-   The 960px content column sits at x 240–1200. Every section keeps its
-   Figma y-position by reproducing the gaps between them.
-   ========================================================================== */
 :root{
   --bg:          #141814;
   --hairline:    #343434;
   --ink:         #d1cdb4;
   --ink-dim:     rgba(209,205,180,.5);
   --white-dim:   rgba(255,255,255,.5);
-  /* Sampled straight off the 1440 × 2310 Figma export, not eyeballed:
-     the 15px grid is a solid #212621 hairline, and each column rule is a
-     BLACK stroke with a hard (no-blur) #343434 shadow sitting 1px outside
-     it — two adjacent pixels, which is what gives it its weight. */
   --grid-line:   #212621;
   --rule-ink:    #000000;
   --rule-glow:   #343434;
   --grid-step:   15px;
   --col:         960px;
-  --pad:         29px;   /* hero + projects inset inside the column */
+  --pad:         29px;
   --ticker-card: #90865b;
   --ticker-edge: #212621;
   --mark-w:      115px;
-  --mark-inset:  .235;   /* the shader's smoke padding, as a fraction of the box */
-
+  --mark-inset:  .235;
   --font-display:"Exposure Trial VAR","Exposure Trial",Newsreader,"Times New Roman",Georgia,serif;
   --font-body:   Geist,"Geist Light",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --ease-out:    cubic-bezier(.22,.85,.3,1);
   --cursor-hand: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M2%2014H6V16H2V14Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M4%2016H22V18H4V16Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M6%2018H22V20H6V18Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M8%2020H20V22H8V20Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M8%202H10V17H8V2Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M10%2014H22V16H10V14Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M12%208H22V14H12V8Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M16%208H18V12H16V8Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M20%2012H22V14H20V12Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M18%208H20V14H18V8Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M14%206H16V14H14V6Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M10%202H12V14H10V2Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M6%202H8V14H6V2Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M20%208H22V10H20V8Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%206H18V8H16V6Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M12%206H14V8H12V6Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M8%200H10V2H8V0Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M2%2012H6V14H2V12Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M0%2014H2V16H0V14Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M2%2016H4V18H2V16Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M4%2018H6V20H4V18Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M6%2020H8V22H6V20Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M8%2022H20V24H8V22Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M20%2020H22V22H20V20Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M22%2010H24V20H22V10Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M6%2014H8V16H6V14Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M12%2016H14V20H12V16Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%2016H18V20H16V16Z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E") 8 2, pointer;
 }
-
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{
   margin:0; background:var(--bg); color:#fff;
   font-family:var(--font-body);
   -webkit-font-smoothing:antialiased;
-  /* clip, not hidden: `hidden` would make the body a scroll container and
-     kill the navbar's position:sticky. */
   overflow-x:clip;
 }
-/* the pointer from the Figma notes, on everything interactive */
 a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
-
-/* the content layer: an opaque sheet that rides over the pinned footer. The
-   118px that used to be the footer's top margin belongs to this sheet now,
-   so the reveal starts from the same gap the design has. */
 .page{
   position:relative; width:100%; overflow-x:clip;
   z-index:1; background:var(--bg); padding-bottom:118px;
 }
-/* The sheet and the footer are the same colour, so without a shadow the
-   sheet's lower edge is invisible and the footer just looks truncated. It
-   belongs to the 960 column, not to the full-bleed sheet — a shadow on
-   .page itself spanned the whole window, which is not where the structure
-   is. This is a zero-height element in normal flow, so it needs no
-   positioning: it simply sits at the sheet's lower edge and travels with
-   it. It cannot live inside .page — that clips its overflow. */
 .page-shade{
   position:relative; z-index:2; height:0; pointer-events:none;
   width:var(--col); max-width:calc(100vw - 32px); margin:0 auto;
 }
 .page-shade::after{
   content:""; position:absolute; left:0; right:0; top:0; height:46px;
-  /* clear for the first 2px: at full reveal the sheet's edge lands exactly on
-     the footer's own black-and-glow rule, and the shadow would otherwise
-     crush the glow down to near the background */
   background:linear-gradient(to bottom,
     rgba(0,0,0,0) 0 2px, rgba(0,0,0,.5) 2px, rgba(0,0,0,.22) 38%, rgba(0,0,0,0) 100%);
 }
 .col{width:var(--col);max-width:calc(100vw - 32px);margin:0 auto;position:relative}
-
-/* ---- the column rules ---------------------------------------------------
-   Three layers, because the Figma treats them as three things. Measured off
-   the 1440 × 2310 export, pixel by pixel:
-     column rules   x 239/240 and 1200/1201, navbar's lower edge → page bottom
-     15px verticals x 255 … 1185, navbar's lower edge → footer's top
-     15px horizontals full column width, y 76, 91, 106 … → footer's top
-   -------------------------------------------------------------------------- */
 .gridrules,.grid-h,.grid-v{position:absolute;pointer-events:none;z-index:0}
-
-/* Each column rule is a 2px pair, mirrored about the column:
-       x 239 #343434 | x 240 #000        x 1200 #000 | x 1201 #343434
-   the black stroke on the column's own edge, its hard shadow one pixel
-   outside it. They paint ABOVE the sections — in the Figma render the black
-   is unbroken at x 240 and 1200 all the way down, straight through the
-   ticker, the trek band and the footer. */
 .gridrules{
   left:calc(50% - var(--col) / 2);
   width:var(--col);
   top:var(--grid-top,0px); bottom:0;
-  z-index:50;                      /* over the sections, under the navbar */
+  z-index:50;
 }
 .gridrules::before,.gridrules::after{
   content:""; position:absolute; top:0; bottom:0; width:2px;
 }
-.gridrules::before{                /* pixels 239, 240 */
+.gridrules::before{
   left:-1px;
   background:linear-gradient(to right,var(--rule-glow) 0 1px,var(--rule-ink) 1px 2px);
 }
-.gridrules::after{                 /* pixels 1200, 1201 */
+.gridrules::after{
   left:100%;
   background:linear-gradient(to right,var(--rule-ink) 0 1px,var(--rule-glow) 1px 2px);
 }
-
-/* The 15px rules are inset vertically: they start at the navbar's lower edge
-   and stop at the footer's top, never running behind either. */
-.grid-h{                       /* horizontal — full column width */
+.grid-h{
   left:calc(50% - var(--col) / 2); width:var(--col);
   top:calc(var(--grid-top,0px) + var(--grid-step));
   height:calc(var(--grid-h,0px) - var(--grid-step));
   background-image:repeating-linear-gradient(to bottom,
     var(--grid-line) 0 1px, transparent 1px var(--grid-step));
 }
-/* vertical — anchored on the column edge, so the rules land on 255, 270 …
-   1185 exactly as Figma has them. The one that falls on the column's own
-   edge is hidden under the black stroke that paints over it. */
 .grid-v{
   left:calc(50% - var(--col) / 2); width:var(--col);
   top:var(--grid-top,0px); height:var(--grid-h,0px);
   background-image:repeating-linear-gradient(to right,
     var(--grid-line) 0 1px, transparent 1px var(--grid-step));
 }
-/* everything else stacks above the grid; the navbar is excluded so it keeps
-   its own sticky position and sits above the column rules */
 .page > *:not(.gridrules):not(.grid-h):not(.grid-v):not(.nav){position:relative;z-index:1}
-
-/* ============================== NAVBAR =================================== */
-/* Figma exports the navbar's fill as a raster because it is not a flat
-   colour: reading that export row by row, it is a vertical alpha ramp of
-   #131713 — 0.482 at the top edge, falling linearly to 0 at the bottom —
-   sitting over a 26.65px background blur (node 3963:10844). So the bar is
-   dense where the logo and the button are and dissolves into the page by
-   its lower edge; a flat slab is the wrong shape entirely.
-   The glass lives on ::before rather than on .nav so the mask below can
-   fade the blur without touching the logo or the button. */
 .nav{
   position:sticky; top:0; z-index:60;
   height:62px; width:100%; background:transparent;
 }
 .nav::before,.nav::after{content:"";position:absolute;inset:0;pointer-events:none}
-/* the glass. Figma applies the blur evenly across the band, which leaves a
-   hard blurred/sharp seam at the lower edge once the page scrolls under it;
-   holding it through the top half and ramping it out lets the bar dissolve
-   instead of ending on a cut. The mask is on this layer alone so it cannot
-   eat into the tint's own ramp. */
 .nav::before{
   z-index:0;
   backdrop-filter:blur(26.65px); -webkit-backdrop-filter:blur(26.65px);
   -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 48%,rgba(0,0,0,0) 100%);
           mask-image:linear-gradient(to bottom,#000 0%,#000 48%,rgba(0,0,0,0) 100%);
 }
-/* the tint, straight off the Figma export's alpha ramp, painted over the
-   glass and under the logo and the button */
 .nav::after{
   z-index:1;
   background:linear-gradient(to bottom,
@@ -165,10 +92,6 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
 }
 .nav__in{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:space-between}
 .nav__cta{margin-right:20px}
-/* Figma 4694:1597 — the word sits at x 704 in a 1440 frame, which is the
-   middle of the 960 column rather than the middle of the window. It is
-   absolutely placed so the logo and the button keep their own edges and the
-   word does not drift when either of them changes width. */
 .nav__work{
   position:absolute; left:50%; translate:-50% 0; top:calc(50% - 1px);
   transform:translateY(-50%);
@@ -177,11 +100,6 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
   transition:color 200ms var(--ease-out);
 }
 .nav__work:hover,.nav__work[aria-current="page"]{color:var(--ink)}
-
-/* The animated mark, scaled up from the 40×40 slot so the smoke has room.
-   The shader pads the glyph inside its canvas to leave the smoke somewhere
-   to go, so the box is pulled left by that padding — otherwise the visible
-   mark would sit ~26px right of the headline it is meant to line up with. */
 .brandmark{
   position:relative; display:block;
   width:var(--mark-w); aspect-ratio:912 / 444;
@@ -200,22 +118,6 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
     0%   { opacity: var(--motion-origin-opacity, 0); }
     100% { opacity: 1; }
   }
-
-/* ---- contact button (Figma "contact btn 4", 4758:1517) ------------------
-   It copies the address instead of opening a mail client, so it has three
-   states rather than two — Contact, Email, Copied — and the pill morphs to
-   whichever label is showing.
-
-   Every length is in `em` against the button's own 14px, so the shadows, the
-   cap plate and the streak all rescale together if the size changes rather
-   than being blurred by a transform.
-
-   Two things worth knowing. Centring and scaling use the independent
-   `translate` and `scale` properties, which leaves `transform` free for the
-   motion — mixing both on one property is what makes a pill like this drift
-   off-centre halfway through. And the width is set from JS, because it is the
-   measured width of the label that happens to be showing; everything else is
-   here.                                                                    */
 .cbtn-wrap{ position:relative; display:inline-grid; place-items:center }
 .cbtn{
   --hair:max(1px, .0715em);
@@ -229,7 +131,6 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
   --in:cubic-bezier(.16,1,.3,1);
   --out-e:cubic-bezier(.4,0,1,1);
   --spring:cubic-bezier(.22,1,.28,1);
-
   position:relative; isolation:isolate;
   display:inline-flex; align-items:center; justify-content:center;
   height:2.2143em; min-width:7em; padding-inline:1.15em;
@@ -251,11 +152,7 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
   box-shadow:var(--push); transform:translateY(.0715em) scale(.965);
   transition-duration:110ms,110ms,110ms,320ms,180ms;
 }
-/* the pill itself defocuses for the length of a label swap, so the change of
-   width reads as one movement rather than as the box chasing the text */
 .cbtn[data-morph]{ filter:blur(.05em) }
-
-/* gradient cap plate — Figma 4758:1488, 84 x 17 at top 1 */
 .cbtn__cap{
   position:absolute; left:50%; top:var(--hair); translate:-50% 0; z-index:1;
   width:calc(100% - 1em); height:1.214em; border-radius:3em;
@@ -266,19 +163,12 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
 .cbtn[data-mode="hover"] .cbtn__cap { filter:brightness(1.28) }
 .cbtn[data-mode="copied"] .cbtn__cap{ filter:brightness(1.35) }
 .cbtn[data-press] .cbtn__cap        { filter:brightness(.8) }
-
-/* specular streak — Figma 4758:1493, 3 x 41 white, blur 4.5, 16.23deg */
 .cbtn__shine{
   position:absolute; left:0; top:-.257em; z-index:3;
   width:.214em; height:2.93em; background:#fff; opacity:0;
   rotate:16.23deg; filter:blur(.321em);
   pointer-events:none; will-change:transform;
 }
-
-/* --- the three stacked labels ------------------------------------------
-   One recipe, three positions. The label leaving lifts and defocuses, the one
-   arriving rises into focus from below, so the swap reads as a dissolve that
-   has a direction rather than a crossfade. */
 .cbtn__slot{
   position:absolute; left:50%; top:50%; z-index:2;
   display:inline-flex; align-items:center; gap:.5em; white-space:nowrap;
@@ -300,41 +190,22 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
              scale 420ms var(--in) 90ms, transform 420ms var(--in) 90ms;
 }
 .cbtn__ico{ display:block; width:1.143em; height:1.143em; flex:none }
-
-/* inset white light — Figma inset 0 -5 6 / 0 4 4 at #FFF 25% */
 .cbtn__light{
   position:absolute; inset:0; z-index:4; border-radius:inherit;
   pointer-events:none;
   box-shadow:inset 0 -.357em .429em rgba(255,255,255,.25),
              inset 0 .286em .286em rgba(255,255,255,.25);
 }
-/* two rings blooming past the pill's edge on a copy */
 .cbtn__halo{
   position:absolute; inset:0; border-radius:999em;
   border:1px solid rgba(255,255,255,.55); opacity:0; pointer-events:none;
 }
-
 @media (prefers-reduced-motion: reduce){
   .cbtn,.cbtn__cap,.cbtn__slot{ transition-duration:1ms !important }
   .cbtn__shine{ display:none }
 }
-
-/* ---- the copy notice -----------------------------------------------------
-   A copy is not worth a change of layout. This is one element, created once by
-   the shell and parked in the bottom-left corner of the window: it says what
-   went to the clipboard, holds for a second and leaves. Nothing on the page
-   moves for it, which is the whole point — the button that was pressed stays
-   exactly where it was, at the size it was.
-
-   It is made of the same material as that button, so it reads as its answer
-   rather than as a stray piece of interface: the same #141814 body, the same
-   #626262 hairline, the same shadow.
-
-   It is also the live region. Being visible, it needs no screen-reader-only
-   twin, and it never leaves the document — only its opacity changes — so a
-   change of text is announced whether or not it happens to be on screen.    */
 .toast{
-  position:fixed; left:30px; bottom:30px; z-index:200;
+  position:fixed; right:30px; bottom:30px; z-index:200;
   display:inline-flex; align-items:center; gap:9px;
   max-width:min(420px, calc(100vw - 60px));
   padding:9px 15px 9px 13px;
@@ -356,13 +227,9 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
 @media (prefers-reduced-motion: reduce){
   .toast,.toast[data-show]{ translate:0 0; transition-duration:1ms }
 }
-/* On a narrow window the sentence does not fit on one line, and a pill that
-   truncates the very thing it is confirming is worse than useless. It becomes
-   a small card instead: closer to the corner, wrapping to two lines, and
-   squared off enough that two lines do not look like a stretched pill. */
 @media (max-width:560px){
   .toast{
-    left:16px; bottom:16px; right:auto;
+    right:16px; bottom:16px; left:auto;
     max-width:calc(100vw - 32px);
     border-radius:14px; padding:10px 14px 10px 12px;
     align-items:flex-start;
@@ -370,50 +237,24 @@ a,button,.pcard,.exp__card{cursor:var(--cursor-hand)}
   .toast svg{ margin-top:1px }
   .toast span{ white-space:normal; line-height:1.35; overflow:visible }
 }
-
-/* ============================== FOOTER ===================================
-   The footer does not scroll. It is pinned to the bottom of the viewport at
-   z-index 0, and the whole content layer (.page) sits on top of it as an
-   opaque sheet at z-index 1. .foot-space adds exactly the footer's height
-   of transparent, in-flow scroll room after that sheet, so the last 194px
-   of the scroll slides the sheet's lower edge up past the footer's top edge
-   and uncovers it. Nothing about the footer moves — it is revealed.
-   -------------------------------------------------------------------------- */
 .foot{
   position:fixed; left:0; bottom:0; width:100%; height:194px; z-index:0;
   background:var(--bg);
-  /* its column rules are 960 wide inside a full-bleed bar. .page clips its
-     own pair; this bar has to clip the footer's, or on any window narrower
-     than the column they hang off the side and the page scrolls sideways. */
   overflow-x:clip;
 }
-/* The top edge belongs to the 960 column, not to the full-bleed bar — as a
-   border on .foot it ran the whole window. Same construction as every other
-   rule on the page: the black stroke, its #343434 shadow one pixel off it.
-   It reads downwards because the sheet's lower edge lands flush on the
-   black, so there is nothing above it left to see. */
 .foot__in::before{
   content:""; position:absolute; left:0; right:0; top:0; height:2px;
   background:linear-gradient(to bottom,#000 0 1px,var(--hairline) 1px 2px);
 }
-/* the column rules carry on through the footer, as they do in the Figma —
-   the page's own pair stops exactly where this one starts, so the four
-   pixels read as two unbroken lines whatever the reveal is showing */
 .gridrules--foot{top:0;bottom:0;z-index:5}
-/* the footer used to borrow .col for its width; now it is a full-bleed bar
-   and the column lives inside it */
 .foot__in{
   position:relative; height:100%;
   width:var(--col); max-width:calc(100vw - 32px); margin:0 auto;
 }
 .foot-space{height:var(--foot-h,194px);pointer-events:none}
-/* If the footer is too tall for the viewport to hold it (a short window, or
-   the stacked mobile layout), pinning it would crop its top. There it simply
-   goes back to being the last thing on the page. */
 html[data-foot-reveal="off"] .foot{position:relative;bottom:auto;margin-top:118px}
 html[data-foot-reveal="off"] .foot-space{display:none}
 html[data-foot-reveal="off"] .page{padding-bottom:0}
-/* the same animated mark as the navbar, aligned to the links below it */
 .foot__brand{position:absolute;top:14px;left:calc(30px - var(--mark-w) * var(--mark-inset))}
 .foot__links{
   position:absolute; left:30px; top:84px; width:63px;
@@ -422,8 +263,6 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
 }
 .foot__links a,.foot__copy{color:var(--ink-dim);text-decoration:underline;text-underline-position:from-font}
 .foot__links a:hover,.foot__copy:hover{color:var(--ink)}
-/* the email is a button, because it copies rather than navigating; everything
-   else about it belongs to the row of links it sits in */
 .foot__copy{
   font:inherit; background:none; border:0; padding:0; margin:0;
   text-align:left; width:100%; display:block;
@@ -433,20 +272,13 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
 .foot__copy span{ display:inline-block; transition:opacity 160ms var(--ease-out) }
 .foot__copy[data-said] span{ color:var(--ink) }
 .foot__note{
-  /* the note runs to three lines now; 194 is the longest of them set solid, so
-     none of them wraps a second time. The block is set so its first line
-     starts level with "X:" across the footer — the two columns read as one
-     line of type beginning at the same height. */
   position:absolute; right:61px; top:calc(50% + 10px); translate:0 -50%;
   width:194px; text-align:right; display:flex; flex-direction:column; gap:6px;
 }
 .foot__note b{font-family:var(--font-display);font-weight:400;font-size:18px;color:var(--ink)}
 .foot__note span{font-family:var(--font-body);font-weight:300;font-size:14px;color:var(--ink-dim)}
-/* sound toggle — Figma 4378:1998 */
 .snd-btn{
   position:absolute; right:61px; top:calc(50% - 44.5px); translate:0 -50%;
-  /* five off the glyph, and five off the frame in both directions so the air
-     round it stays exactly what it was: 11 either side, 8 above and below */
   width:41px; height:35px; border-radius:6px;
   background:var(--bg); border:1px solid #242424;
   display:grid; place-items:center; padding:0; color:var(--ink);
@@ -455,30 +287,11 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   transition:border-color 200ms var(--ease-out),color 200ms var(--ease-out);
 }
 .snd-btn:hover{border-color:#3a3a3a}
-/* the press. Short, and on its own curve so it snaps back rather than easing */
 .snd-btn{transition:border-color 200ms var(--ease-out),color 200ms var(--ease-out),
                     transform 220ms cubic-bezier(.34,1.4,.64,1)}
 .snd-btn:active{transform:scale(.95);transition-duration:90ms}
 .snd-btn svg{width:19px;height:19px;display:block}
-/* the blur spills past the 24-unit box; let it */
 .snd-ico{overflow:visible}
-
-/* The swap, read off the reference frame by frame. The recording is 30fps and
-   the whole glyph — speaker included, not just the two halves — goes to a soft
-   bloom for a single frame, then re-forms as the other state:
-
-     frame  sharpness          frame  sharpness
-       136    18.5  sharp        179    22.5  sharp
-       137     9.2  the bloom    180    10.5  the bloom
-       138    15.6               182    18.7
-       143    18.5  sharp        188    22.7  sharp
-
-   So: 33ms down to about half the edge energy, then 170-200ms back. That is
-   what the keyframes do — the peak sits at 14% of a 210ms run and the icon
-   pulls in a little as it goes, which is what makes the glyph read as
-   dissolving rather than simply softening. The two halves trade places inside
-   that window, so the crossfade itself is never seen; the bloom is what you
-   see, exactly as in the video. */
 @keyframes snd-swap{
   0%  {filter:blur(0);      transform:scale(1)}
   14% {filter:blur(2.6px);  transform:scale(.70)}
@@ -489,12 +302,6 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   animation:snd-swap 210ms cubic-bezier(.4,0,.2,1);
   transform-box:view-box; transform-origin:12px 12px;
 }
-
-/* The waves and the cross. Each is scaled about the middle of the wave cluster
-   rather than its own centre, so the cross collapses towards the speaker and
-   the waves open out of it. The opacity is held back 18ms and done in 45 so
-   the exchange happens entirely under the bloom's peak — you never catch the
-   crossfade, only the bloom, which is what the reference does. */
 .snd-wave,.snd-x{
   transform-box:view-box; transform-origin:18px 12px;
   transition:opacity 45ms linear 18ms,
@@ -509,20 +316,14 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   .snd-btn.is-swap .snd-ico{animation:none}
   .snd-btn:active{transform:none}
 }
-/* Figma 4398:2295 — centred over the button with a 10px gap */
 .snd-tip{
-  /* centred on the button (half of 41) and the same 11px above its top edge,
-     which is 2.5px lower now that the button is 35 rather than 40 tall */
   position:absolute; right:calc(61px + 20.5px); translate:50% -50%;
   top:calc(50% - 44.5px - 40.5px);
   white-space:nowrap; pointer-events:none;
   font-family:var(--font-body); font-weight:300; font-size:12px; color:var(--ink);
   background:#151915; border:1px solid #383838; border-radius:6px; padding:4px 8px;
   opacity:0;
-  /* it floats up into place; `translate` carries the centring, so the entry
-     rides on top of it and the two never fight */
   translate:50% calc(-50% + 6px);
-  /* out is slower and later than in, so it fades rather than snaps away */
   transition:opacity 260ms var(--ease-out) 60ms,
              translate 260ms var(--ease-out) 60ms;
 }
@@ -534,106 +335,53 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
 @media (prefers-reduced-motion:reduce){
   .snd-tip,.snd-btn:hover + .snd-tip,.snd-btn:focus-visible + .snd-tip{transition-duration:1ms}
 }
-
-/* ============================ RESPONSIVE ================================= */
 @media (max-width:1000px){
   .foot{height:auto;padding:28px 0 36px}
   .foot__in{display:flex;flex-direction:column;gap:22px;padding-inline:8px;width:var(--col);max-width:calc(100vw - 32px)}
   .foot__brand,.foot__links,.foot__note,.snd-btn,.snd-tip{position:static;translate:none;width:auto;text-align:left}
-  /* the tip is in the flow down here, so the float-up entry comes off it */
   .snd-btn:hover + .snd-tip,.snd-btn:focus-visible + .snd-tip{translate:none}
   .foot__note{align-items:flex-start}
   .snd-btn{align-self:flex-start;width:41px;height:35px}
 }
-
-/* ============================ LOCKED CARD ================================ */
-/* Service club is not open yet. The card is an <a> with no href, so there is
-   nothing to click, nothing to tab to and no context menu offering to open it
-   in a new tab — the lock is in the markup, not painted over the top of a live
-   link. All that is left is to say so on hover, which the pointer does: the
-   badge is carried inline rather than fetched, the same as the resize pointer
-   on the IRCTC hero, so it is there offline and behind a content policy. The
-   hotspot sits just inside its top-left corner, which puts the badge below and
-   to the right of where you are pointing, the way a label should sit. */
 :root{ --cursor-soon: url("media/7832d3fa5af0.png") 6 6 }
 .pcard.is-locked,
 .pcard.is-locked *{ cursor:var(--cursor-soon), not-allowed }
-
-
-
-/* ---------- project cards (attached: card hover with sound) --------- */
-/* ==========================================================================
-   PROJECT CARDS — folder-opening hover
-   --------------------------------------------------------------------------
-   Idle geometry  : nodes 4278:11297 / 11312 / 11326 / 11340
-   Hover geometry : nodes 4300:1080 (before) -> 4300:1114 (on hover)
-
-   The hover targets are MEASURED, not invented. Centre deltas and rotations
-   were solved from the two frames' bounding boxes; the rotation deltas came
-   out identical within each group (-38.32deg for deck-a + sitemap,
-   +44.10deg for deck-b + phone), which is what confirms the signs.
-
-   The card is authored in Figma's 174 x 188 space and scaled by --k.
-   ========================================================================== */
-
-/* ------------------------------ shell ----------------------------------- */
 .pcard{
-  /* ===== TUNING — movement is in FIGMA UNITS (1 unit = --k screen px) ===== */
-  --lift:1;      /* vertical travel of the contents          */
-  --spread:1;    /* horizontal fan                           */
-  --spin:1;      /* how far the contents rotate as they open */
-  --depth:1;     /* forward projection (translateZ)          */
-  --tilt:0;      /* pointer parallax. 0 = card never moves   */
+  --lift:1;
+  --spread:1;
+  --spin:1;
+  --depth:1;
+  --tilt:0;
   --dur-in:400ms;
   --dur-out:400ms;
-  --stagger:0;   /* 0 = every layer starts together (delay 0, as specified).
-                    Raise to ~1 to bring the front-to-back stagger back.     */
-  /* Spring: stiffness 400, damping 30, mass 1  ->  omega0 = 20 rad/s,
-     zeta = 0.75, 2.84% overshoot peaking at 60% of the 400ms.
-     Sampled to a linear() curve, so it is the real spring solution rather
-     than a bezier approximation. Falls back to the bezier above it on
-     engines without linear().                                              */
+  --stagger:0;
   --ease-in:cubic-bezier(.22,1.02,.36,1);
   --ease-out:cubic-bezier(.22,1.02,.36,1);
   --ease-in:linear(0 0%, 0.0128 2%, 0.0469 4%, 0.0969 6%, 0.158 8%, 0.2262 10%, 0.2982 12%, 0.3716 15%, 0.4441 17%, 0.5143 19%, 0.5808 21%, 0.6429 23%, 0.7 25%, 0.7518 27%, 0.7983 29%, 0.8394 31%, 0.8754 33%, 0.9064 35%, 0.9329 38%, 0.9552 40%, 0.9736 42%, 0.9886 44%, 1.0006 46%, 1.0099 48%, 1.0169 50%, 1.022 52%, 1.0254 54%, 1.0274 56%, 1.0283 58%, 1.0283 60%, 1.0276 62%, 1.0264 65%, 1.0248 67%, 1.0229 69%, 1.0209 71%, 1.0189 73%, 1.0168 75%, 1.0148 77%, 1.0128 79%, 1.011 81%, 1.0093 83%, 1.0078 85%, 1.0064 88%, 1.0051 90%, 1.004 92%, 1.0031 94%, 1.0023 96%, 1.0016 98%, 1 100%);
   --ease-out:linear(0 0%, 0.0128 2%, 0.0469 4%, 0.0969 6%, 0.158 8%, 0.2262 10%, 0.2982 12%, 0.3716 15%, 0.4441 17%, 0.5143 19%, 0.5808 21%, 0.6429 23%, 0.7 25%, 0.7518 27%, 0.7983 29%, 0.8394 31%, 0.8754 33%, 0.9064 35%, 0.9329 38%, 0.9552 40%, 0.9736 42%, 0.9886 44%, 1.0006 46%, 1.0099 48%, 1.0169 50%, 1.022 52%, 1.0254 54%, 1.0274 56%, 1.0283 58%, 1.0283 60%, 1.0276 62%, 1.0264 65%, 1.0248 67%, 1.0229 69%, 1.0209 71%, 1.0189 73%, 1.0168 75%, 1.0148 77%, 1.0128 79%, 1.011 81%, 1.0093 83%, 1.0078 85%, 1.0064 88%, 1.0051 90%, 1.004 92%, 1.0031 94%, 1.0023 96%, 1.0016 98%, 1 100%);
   --persp:900px;
-  --k:2.414;     /* 174 x 2.414 = 420px card */
-  /* ======================================================================= */
+  --k:2.414;
   --rx:0deg; --ry:0deg;
   position:relative; display:block;
   width:calc(174px * var(--k)); height:calc(188px * var(--k));
   margin-inline:auto; text-decoration:none; color:inherit;
   -webkit-tap-highlight-color:transparent;
 }
-/* The card itself never scales on hover — only its contents move. */
 .pcard__inner{
   position:absolute; left:0; top:0; width:174px; height:188px; transform-origin:0 0;
   transform:scale(var(--k)) perspective(1400px) rotateX(var(--rx)) rotateY(var(--ry));
   transition:transform var(--dur-out) var(--ease-out);
 }
-
-/* --------------------------- the clipping pocket -------------------------
-   Everything that moves lives inside this rounded box, which is exactly the
-   artwork's rect (-3, 0, 181 x 186, radius 27). Nothing — no edge, no
-   transformed corner, no shadow — can escape it at any point in the
-   animation. The panel and the arrow sit OUTSIDE it so the panel's shadow
-   still spills freely below the card, exactly as Figma draws it.           */
 .pcard__pocket{
   position:absolute; left:-3px; top:0; width:181px; height:186px;
   border-radius:27px;
   overflow:hidden;
-  /* a transformed child can hairline past a rounded clip in some engines;
-     the mask is a second, independent clip that cannot                       */
   -webkit-mask-image:radial-gradient(#fff,#fff);
           mask-image:radial-gradient(#fff,#fff);
   z-index:1;
-  transform:translateZ(0);            /* own stacking + compositing context */
+  transform:translateZ(0);
 }
-/* re-establishes the card's own 174x188 coordinate space inside the pocket */
 .pcard__stage{ position:absolute; left:3px; top:0; width:174px; height:188px; }
-
-/* ------------------------------ layers ---------------------------------- */
 .pl{
   position:absolute; margin:0; display:flex; align-items:center; justify-content:center;
   transform:
@@ -643,14 +391,12 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
                 calc(var(--z,0px) * var(--depth)));
   transition:transform var(--dur-out) var(--ease-out) calc(var(--out-delay,0ms) * var(--stagger));
 }
-/* inner box carries the DESIGN rotation; hover adds --dr on top of it */
 .pl__r{ flex:none; position:relative;
   transform:rotate(calc(var(--rot,0deg) + var(--dr,0deg) * var(--spin)));
   transition:transform var(--dur-out) var(--ease-out) calc(var(--out-delay,0ms) * var(--stagger)); }
 .pl img{ display:block; width:100%; height:100%; object-fit:cover; }
 .crop{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 .crop img{ position:absolute; max-width:none; }
-
 .pcard:is(:hover,:focus-visible) .pl{
   --x:var(--hx,0px); --y:var(--hy,0px); --z:var(--hz,0px);
   transition-duration:var(--dur-in); transition-timing-function:var(--ease-in);
@@ -661,26 +407,19 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   transition-duration:var(--dur-in); transition-timing-function:var(--ease-in);
   transition-delay:calc(var(--in-delay,0ms) * var(--stagger));
 }
-
-/* L1 · artwork. Identical in both Figma frames — it does not move at all. */
 .pl--art{ left:-3px; top:0; width:181px; height:186px; z-index:1; }
 .pl--art .pl__r{ width:181px; height:186px; border-radius:27px; overflow:hidden; }
 .pl--art .crop{ border-radius:27px; }
-
-/* --- the deck. Measured deltas; delays run front-to-back so the nearest
-       material leads and the back of the stack trails it out.            --- */
 .pl--deck-a{ left:47.46px; top:19.33px; width:80.085px; height:93.332px; z-index:2;
   --rot:6.36deg;
   --hx:-31.62px; --hy:-8.72px; --hz:2px; --hdr:-38.32deg;
   --in-delay:120ms; --out-delay:0ms; }
 .pl--deck-a .pl__r{ width:71px; height:86px; border-radius:7px; }
-
 .pl--mid{ left:51.52px; top:25.3px; width:70.964px; height:103.409px; z-index:3;
   --rot:5.41deg;
   --hx:-24.69px; --hy:-10.78px; --hz:4px; --hdr:-38.32deg;
   --in-delay:95ms; --out-delay:20ms; }
 .pl--mid .pl__r{ width:62px; height:98px; border-radius:6px; overflow:hidden; }
-
 .pl--deck-b{ left:43.23px; top:17.23px; width:89.477px; height:101.208px; z-index:4;
   --rot:-13.51deg;
   --hx:29.92px; --hy:-5.29px; --hz:7px; --hdr:44.10deg;
@@ -690,54 +429,38 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
              23px 20px 18px rgba(0,0,0,.22),10px 9px 13px rgba(0,0,0,.37),
              3px 2px 7px rgba(0,0,0,.43); }
 .c-hh .pl--deck-b .pl__r{ border-radius:12px; }
-
 .deck{ width:100%; height:100%; border:1px solid #141414; border-radius:inherit;
   background-image:linear-gradient(180deg,#323232 0%,#3f3f3f 24.96%,#343434 70.235%,#323232 100%); }
-
 .pl--dev{ z-index:5;
   --hx:13.69px; --hy:-7.48px; --hz:10px; --hdr:44.10deg;
   --in-delay:40ms; --out-delay:62ms; }
-
 .pl--ov{ z-index:6;
   --hx:0px; --hy:-29px; --hz:16px; --hdr:15.07deg;
   --in-delay:0ms; --out-delay:85ms; }
-
-/* --- per-card geometry --------------------------------------------------- */
 .c-hh  .pl--art  img{ left:-.05%; top:-39.38%; width:100.1%;  height:139.38%; }
 .c-hh  .pl--dev { left:51.19px; top:24.34px; width:84.39px;  height:129.26px; --rot:-13.68deg; }
 .c-hh  .pl--dev  .pl__r{ width:57.905px; height:118.94px; }
 .c-hh  .pl--ov  { left:48.99px; top:50px;    width:77.351px; height:81px; }
 .c-hh  .pl--ov   .pl__r{ width:77.351px; height:81px; }
 .c-hh  .pl--ov   img{ left:-.02%; top:-6.76%; width:100.04%; height:119.37%; }
-
 .c-fair .pl--art img{ left:0; top:-36.53%; width:100%; height:173.06%; }
 .c-fair .pl--dev { left:52px; top:24px; width:83.118px; height:127.179px; --rot:-13.72deg; }
 .c-fair .pl--dev  .pl__r{ width:57px; height:117px; }
 .c-fair .pl--ov  { left:47px; top:56px; width:80px; height:64px; }
 .c-fair .pl--ov   .pl__r{ width:80px; height:64px; }
 .c-fair .pl--ov   img{ left:-.02%; top:-24.41%; width:100.04%; height:157.48%; }
-
 .c-svc  .pl--dev { left:50px; top:25px; width:76.835px; height:86.522px; --rot:-13.01deg; }
 .c-svc  .pl--dev  .pl__r{ width:61.63px; height:74.559px; border-radius:6px; }
 .c-svc  .pl--dev  .crop{ border-radius:6px; }
 .c-svc  .pl--dev  img{ left:-13.02%; top:0; width:120.63%; height:100%; }
 .c-svc  .pl--ov  { left:52px; top:67px; width:70px; height:87px; }
 .c-svc  .pl--ov   .pl__r{ width:70px; height:87px; }
-
 .c-irc  .pl--dev { left:45px; top:21.78px; width:86.389px; height:105.014px; --rot:-13.64deg; }
 .c-irc  .pl--dev  .pl__r{ width:66.59px; height:91.9px; }
 .c-irc  .pl--dev  img{ left:-69.17%; top:-28.49%; width:240.4%; height:128.49%; }
 .c-irc  .pl--ov  { left:52px; top:53px; width:70px; height:83px; }
 .c-irc  .pl--ov   .pl__r{ width:70px; height:83px; }
 .c-irc  .pl--ov   img{ left:0; top:-1.5%; width:100%; height:106.02%; }
-
-/* --------- the folder panel -------------------------------------------
-   Figma shortens it on hover: y 80 -> 94, height 105 -> 91. The bottom
-   stays put, the top edge (tab and all) comes down 14.
-   The two path variants have identical command structure, so the shape is
-   morphed with the CSS `d` property rather than scaled — that keeps the
-   17-unit corner radii exact instead of squashing them 13%.
-   The whole svg also slides down 14 so the BOTTOM edge stays anchored.   */
 .pcard__panel{
   position:absolute; left:0; top:80px; width:174px; height:105px; z-index:7;
 }
@@ -745,12 +468,6 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   position:absolute; left:-51px; top:-18.9px; width:276px; height:342.9px; display:block;
   transform:translateY(0);
   transition:transform var(--dur-out) var(--ease-out);
-  /* The svg is 276 x 342.9 for a panel that is 174 x 105: the extra canvas is
-     room for the drop shadow, and it hangs 51px past each side of the card and
-     216 below it. That canvas is transparent but it is still a box, so without
-     this it answers the pointer — the card lights up, and shows its cursor,
-     while you are nowhere near it. Nothing here is clickable; the card's own
-     <a> is underneath and unaffected. */
   pointer-events:none;
 }
 .pcard:is(:hover,:focus-visible) .pcard__panel svg{
@@ -763,24 +480,14 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   transition-duration:var(--dur-in); transition-timing-function:var(--ease-in); }
 .pcard:is(:hover,:focus-visible) .pnl-s{ d:path("M90.4912 16.9C96.6891 16.9 102.783 18.5002 108.181 21.5455L115.297 25.5602C117.546 26.829 120.085 27.4957 122.667 27.4957H208C218.493 27.4957 227 36.0024 227 46.4957V92.9C227 103.393 218.493 111.9 208 111.9H68C57.5066 111.9 49 103.393 49 92.9V35.9C49 25.4066 57.5066 16.9 68 16.9H90.4912Z");
   transition-duration:var(--dur-in); transition-timing-function:var(--ease-in); }
-
-/* --------------------------- text + arrow ------------------------------- */
 .pcard__meta{ position:absolute; left:12px; top:132px; z-index:8;
   display:flex; flex-direction:column; gap:2px; white-space:nowrap; }
 .c-irc .pcard__meta{ top:130px; }
 .pcard__title{ margin:0; font-size:18px; font-weight:500; line-height:normal; color:#fff; }
 .pcard__sub{ margin:0; font-size:14px; font-weight:400; line-height:normal; color:rgba(255,255,255,.5); }
-
-/* ------------------------------- the button ------------------------------
-   The ring is NOT a flat stroke. Sampled from a 12x render of node
-   4300:1092, the 2.25-unit band reads 60 at the top, 52 at the sides and
-   30 at the bottom — a vertical gradient. It is drawn as a gradient
-   background with the disc painted inside it, so the geometry (36x36,
-   radius, shadow stack, position) is untouched.
-   Figma moves the button down 12 with the shortening folder (y 102 -> 114). */
 .pcard__arrow{
   position:absolute; left:128px; top:102px; width:36px; height:36px; z-index:9;
-  border-radius:52px; padding:2.5px;                 /* padding = ring width */
+  border-radius:52px; padding:2.5px;
   background:linear-gradient(180deg,
       #3c3c3c 0%, #3c3c3c 37%, #343434 50%, #232323 85%, #1e1e1e 100%);
   box-shadow:0 0 0 1px #121212, 0 32px 9px rgba(0,0,0,.01), 0 21px 8px rgba(0,0,0,.09),
@@ -792,13 +499,10 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
   transform:translateY(12px);
   transition-duration:var(--dur-in); transition-timing-function:var(--ease-in);
 }
-/* the dark disc, and the clip that swallows the outgoing arrow */
 .pcard__arrowin{
   width:100%; height:100%; border-radius:inherit; background:#131313;
   overflow:hidden; display:grid; place-items:center;
 }
-/* Two identical arrows share one grid cell, so they cannot misalign.
-   Figma moves the outgoing arrow (4,4) -> (23,-16): +19 / -20.            */
 .pcard__arrowin img{
   grid-area:1/1; width:28px; height:28px; display:block;
   transition:transform var(--arrow-out,320ms) cubic-bezier(.4,0,.2,1);
@@ -811,16 +515,11 @@ html[data-foot-reveal="off"] .page{padding-bottom:0}
 }
 .pcard:is(:hover,:focus-visible) .pcard__arrowin img:nth-child(1){ transform:translate3d(19px,-20px,0); }
 .pcard:is(:hover,:focus-visible) .pcard__arrowin img:nth-child(2){ transform:translate3d(0,0,0); }
-
 .pcard:focus-visible{ outline:none }
 .pcard:focus-visible .pcard__arrow{ background:#fff }
-
-/* ---- responsive: only --k changes ---- */
 @media (max-width:960px){ }
 @media (max-width:900px){ .pcard{--k:2.0} }
 @media (max-width:520px){ .pcard{--k:1.75} }
-
-/* ---- accessibility ---- */
 @media (prefers-reduced-motion:reduce){
   .pcard{--lift:0;--spread:0;--spin:0;--depth:0;--tilt:0;--dur-in:1ms;--dur-out:1ms}
   .pcard__arrow img{ transition-duration:1ms }

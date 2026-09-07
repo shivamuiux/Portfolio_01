@@ -1,115 +1,34 @@
-/* ==========================================================================
-   IRCTC Rail Connect — a redesign. Figma › IRCTC project (4238:5842),
-   1440 × 14369.
-
-   The frame around this page (column, grid, rules, navbar, revealed footer,
-   cursor) is the shell's. Everything here is the page's own content at the
-   Figma measurements: each section's margin-top is the gap the design leaves
-   above it, so the whole 14369px rhythm is reproduced without pinning
-   anything to an absolute offset.
-
-   What is a picture in Figma is a picture here — the app screenshots, the
-   store reviews, the design-system boards, the wireframes and the final
-   screens, all of them raster in the file and raster here, cropped exactly as
-   the design crops them. What Figma draws as type or vector is type and
-   vector here: every heading and paragraph, the persona card, the four
-   takeaway rows, the annotation dots, the two flow arrows, and the pair of
-   chevrons inside the comparison handle.
-   ========================================================================== */
-
-/* The ew-resize pointer the brief asks for. It is pixelarticons' own
-   32x32 PNG, carried here as a data URI rather than fetched from
-   pixelarticons.com: a cursor whose url() fails silently falls back to the
-   plain arrow with nothing to show for it, and it would fail wherever the
-   page is opened offline, from a file, or behind a content policy that
-   blocks third-party images. Inlined, it is 278 bytes and always there —
-   the same treatment the shell gives its own hand pointer.
-   Hotspot 4 1, exactly as specified. */
 :root{ --cursor-ew: url("media/35a9ee64050d.png") 4 1 }
-
-
-/* The 15px rules. Read off Figma's own render of the frame rather than off
-   the line nodes' reported coordinates — the file's line layer is nested, and
-   taking its numbers at face value puts the whole pattern two pixels low.
-   What Figma paints is a rule every 15px from the navbar's lower edge at 62,
-   so every rule sits at y = 62 + 15k, and the shell's phase that produces
-   that is 1: it starts the run at (62 - 1) + phase + 15. */
 :root{ --grid-phase:1px }
-
-.irc{ padding-bottom:36px }        /* the footer sits at 14177; the frame is 14371 tall */
-
-/* ------------------------------------------------------------- shared ----- */
-/* wrapped in :where() so it carries almost no weight and never eats a margin
-   set below, or .col's own centring */
+.irc{ padding-bottom:36px }
 :where(.irc) :where(h2,h3,p,b,span,div,ul,li){ margin:0 }
 :where(.irc) :where(ul){ padding:0; list-style:none }
-
 :where(.irc) p{
   font-family:var(--font-body); font-weight:400; font-size:16px;
   line-height:normal; color:#fff;
 }
-
-/* the label band — 960 × 29 on #0d0f0d, the text 29px in */
 .irc .band{
   height:29px; background:#0d0f0d;
   display:flex; align-items:center; padding-left:29px;
   font-family:var(--font-body); font-weight:500; font-size:16px; color:#fff;
 }
-
-/* the page's two heading sizes, both Exposure at 32 */
-/* Figma sets these at 32 over 38 — a 2-line heading measures 76 in the file —
-   which is Exposure's own normal and not the fallback's, so it is written out
-   rather than left to the font */
 .irc__h{
   font-family:var(--font-display); font-weight:400; font-size:32px;
   line-height:38px; color:#fff;
 }
-
-/* a slot the artwork has not been fetched for */
 :where(.irc) :where(.ph){
   width:100%; height:var(--h,479px); background:var(--ticker-card);
   display:grid; place-items:center;
   font-family:var(--font-body); font-size:16px; color:#fff; text-align:center;
 }
-/* :where() keeps both of these at almost no weight, so every rule below that
-   gives a picture its own box — a 370px screen, a 210px wireframe, a cropped
-   window — outranks them instead of being swallowed by width:100% */
 :where(.irc) img:where(.ph){ background:none; object-fit:cover; display:block }
-
-/* Figma crops a picture by oversizing it inside a window and sliding it. Each
-   window below reproduces that literally — the frame clips, the picture keeps
-   the design's own width, height and offset — rather than guessing at an
-   object-position. */
 .irc__win{ position:absolute; overflow:hidden; pointer-events:none }
 .irc__win img{ position:absolute; display:block; max-width:none; object-fit:fill }
-
-/* ---------------------------------------------------------- fitted ------- */
-/* Eight of the sections are compositions drawn at the column's own 960: a
-   phone at 222 × 457 is at 222 × 457 or the comparison stops lining up. Below
-   960 they are reduced as a whole rather than reflowed — board-fit.js moves
-   the children into .nv__board-in and scales it. */
-.irc__fit{ position:relative; overflow:hidden }   /* .col gives the width */
-/* the wrapper board-fit.js makes: the section at its drawn size, scaled to
-   the column, pinned at the top left so the reduction reads as a reduction */
+.irc__fit{ position:relative; overflow:hidden }
 .irc .fit-in{ position:relative; width:960px; height:100%; transform-origin:0 0 }
-
-/* the reveal wants a gentler curve than the shell's --ease-out, which puts
-   four fifths of its travel in the first third and hides the wipe */
 .irc{ --reveal-ease:cubic-bezier(.38,.06,.2,1) }
-
-/* ============================== the hero ================================== */
-/* 960 × 524. Two screens stacked concentrically as the design stacks them —
-   the redesign on top, the live app underneath — and a wipe between them.
-   The layer that carries the new screen is the full stage, so the clip is
-   measured in stage coordinates and the divider cuts the phone, not the
-   picture's own box. */
-/* Not one of the fitted sections: every part of it is placed from the stage's
-   own centre or as a percentage of its width, so it holds the design's sizes
-   at 960 and keeps the phones at full size on a narrow screen instead of
-   shrinking them to a thumbnail. */
 .irc__hero{ position:relative; overflow:hidden;
             height:524px; background:#141814; --wipe:50% }
-
 .irc__shot{
   position:absolute; left:50%; top:50%; translate:-50% -50%;
   border-radius:24px;
@@ -118,8 +37,6 @@
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; border-radius:inherit; display:block; max-width:none;
 }
-/* the live app: a bare screenshot, so the design gives it the phone's white
-   edge and its shadow */
 .irc__shot--old{
   width:211px; height:448px; left:calc(50% - .5px);
   border:3px solid #fff; box-sizing:border-box;
@@ -127,9 +44,7 @@
              28px 70px 45px rgba(0,0,0,.08), 12px 31px 34px rgba(0,0,0,.14),
              3px 8px 18px rgba(0,0,0,.16);
 }
-/* the redesign: the render brings its own device, so no edge is added */
 .irc__shot--new{ width:222px; height:457px; top:calc(50% + .5px); border-radius:0 }
-
 .irc__layer{
   position:absolute; inset:0;
   clip-path:inset(0 calc(100% - var(--wipe)) 0 0);
@@ -139,15 +54,9 @@
   position:absolute; top:0; height:100%; width:2.5px;
   left:calc(var(--wipe) + .25px); translate:-50% 0;
   background:#fb4102; box-shadow:0 4px 4.6px rgba(251,65,2,.37);
-  /* the line takes the pointer now, so the resize cursor can appear over it.
-     A press here still reaches the stage by bubbling, so dragging is
-     unchanged. */
   pointer-events:auto;
   cursor:var(--cursor-ew), auto;
 }
-/* the line is two and a half pixels wide, which no one can reliably hover.
-   This is the same line with five pixels of air either side — invisible, and
-   only there to be pointed at. */
 .irc__bar::before{
   content:""; position:absolute; top:0; bottom:0; left:-5px; right:-5px;
   cursor:inherit;
@@ -159,41 +68,17 @@
   -webkit-backdrop-filter:blur(2.1px); backdrop-filter:blur(2.1px);
   display:flex; align-items:center; justify-content:center; gap:0;
   touch-action:none;
-  /* the pointer the brief asks for. The handle is a <button>, and the shell
-     hands every button its own pointer, so this is repeated below at a weight
-     that wins there. */
   cursor:var(--cursor-ew), auto;
 }
 .irc__hero .irc__handle,
 .irc__hero .irc__handle:hover,
 .irc__hero .irc__handle:active{ cursor:var(--cursor-ew), auto }
-/* Only the line and the knob carry it. The rest of the stage is a picture, and
-   a resize pointer over the phones would promise a handle that isn't there —
-   once a drag is under way it comes back, because the pointer belongs to the
-   thing being dragged wherever it has been taken. */
 .irc__hero.is-dragging,
 .irc__hero.is-dragging *{ cursor:var(--cursor-ew), auto }
 .irc__handle svg{ width:19px; height:21px; display:block; flex:0 0 auto }
 .irc__handle svg + svg{ margin-left:-2px; transform:scaleX(-1) }
 .irc__handle:focus-visible{ outline:2px solid #fb4102; outline-offset:3px }
 .irc__hero.is-dragging{ user-select:none }
-
-/* ============================ overview ==================================== */
-/* 900 × 401 at 29 in: the standfirst and its paragraph on the left, the two
-   fact cards held to the right edge */
-/* The two columns are the same height in the file, so its centring is a
-   no-op there; here the heading is taller by a rule, and centring would
-   carry the two fact cards half of that down and off the pattern. They stay
-   at the top, where the design puts them. */
-/* PINNED. Everything below a text block inherits its height, so a paragraph
-   that wraps one line differently — a font served from Google rather than the
-   local copy, a slightly different rasteriser, a display at 125% or 150% —
-   carries every frame after it off the pattern by that much, which is exactly
-   the drift that made the later sections look wrong while Overview and
-   Research looked right. These six blocks are given the heights the Figma
-   file measures, so the frames below them are pinned to the rules no matter
-   how the type happens to set. Released below 1000, where the text reflows on
-   purpose. */
 .irc__overview{
   padding-left:var(--pad); height:401px;
   display:flex; align-items:flex-start; gap:45px;
@@ -216,28 +101,15 @@
   font-family:var(--font-body); font-weight:300; font-size:14px;
   color:rgba(255,255,255,.6); white-space:nowrap;
 }
-
-/* ============================ figures ===================================== */
-/* two full-width plates on the panel colour: the flow diagram with its two
-   drawn arrows, and the store reviews */
 .irc__plate{ height:479px; background:#0d0f0d }
 .irc__plate .fit-in{ height:479px }
 .irc__flow-img{ left:30px; top:16px; width:715px; height:447px }
 .irc .irc__flow-img img{ left:0; top:-.49%; width:100%; height:108.29% }
-/* the arrows are vector in the file and vector here */
 .irc__arrow{ position:absolute; display:block }
-/* Figma places each arrow's box at 133.19 / 175.24 and 135.07 / 241.88 and
-   then lets the stroke overhang it — 0.66% of the box's own width and 3% of
-   its own height. Those percentages are of the box, not of the section, so
-   they are resolved here into the plain numbers rather than left to calc,
-   where a percentage would measure against the 960 column instead. */
 .irc__arrow--1{ left:131.79px; top:173.83px; width:214.922px; height:49.7418px }
 .irc__arrow--2{ left:133.67px; top:240.47px; width:225.245px; height:46.9262px }
-
 .irc__reviews-img{ left:30px; top:16px; width:900px; height:447px }
 .irc .irc__reviews-img img{ left:0; top:-18.6%; width:100%; height:155.77% }
-
-/* ============================ the ledes =================================== */
 .irc__lede{ padding-left:var(--pad); display:flex; flex-direction:column;
              align-items:flex-start }
 .irc__lede--research{ gap:28px; height:377px }
@@ -249,12 +121,7 @@
 .irc__lede--research p:not(.irc__h),
 .irc__lede--pains    p:not(.irc__h){ width:601px; max-width:100% }
 .irc__lede p + p{ margin-top:0 }
-/* the empty line the design leaves between two paragraphs: a line, 21px */
 .irc__gap{ display:block; height:21px }
-
-/* ========================== the pain points =============================== */
-/* 960 × 2039: six screenshots of the live app, each with its note. Every
-   position is the design's own. */
 .irc__pains{ height:2039px; background:#141814 }
 .irc__pains .fit-in{ height:2039px }
 .irc__pains .irc__shot{
@@ -262,8 +129,6 @@
   width:227px; height:463px; border:3px solid #fff; box-sizing:border-box;
 }
 .irc__pains .irc__shot img{ border-radius:inherit }
-/* each screenshot carries the shadow the design gives that one, not a shared
-   preset — the file has five different stacks here */
 .irc__pain--1{ box-shadow:71px 227px 67px rgba(0,0,0,0), 45px 145px 61px rgba(0,0,0,.04),
                25px 82px 51px rgba(0,0,0,.12), 11px 36px 38px rgba(0,0,0,.2),
                3px 9px 21px rgba(0,0,0,.24) }
@@ -277,8 +142,6 @@
 .irc__pain--5{ box-shadow:91px 161px 52px rgba(0,0,0,0), 58px 103px 47px rgba(0,0,0,.04),
                33px 58px 40px rgba(0,0,0,.12), 15px 26px 30px rgba(0,0,0,.2),
                4px 6px 16px rgba(0,0,0,.24) }
-/* this one is not scaled to fill its frame but slid inside it, 124.88% wide
-   and pinned to the left edge, so it gets the window treatment */
 .irc .irc__pain--4 img{ position:absolute; left:0; top:0;
                         width:124.88%; height:100%; object-fit:fill; max-width:none }
 .irc__pain--4{ overflow:hidden }
@@ -287,14 +150,9 @@
   color:#fff;
 }
 .irc__note b{ font-family:var(--font-body); font-weight:700; font-size:16px }
-/* the one heading the file sets in Montserrat rather than Geist */
 .irc__note--ms b{ font-family:Montserrat,var(--font-body) }
 .irc__note p{ font-size:16px }
 .irc__note--center{ align-items:center; text-align:center }
-
-/* ========================== key takeaways ================================= */
-/* four 899 × 74 bars on the orange, the label in a 253 cell with the design's
-   own hairline and its dark echo */
 .irc__takeaways{ padding-left:30px; height:434px; display:flex; flex-direction:column; gap:46px }
 .irc__row{ position:relative; width:899px; max-width:100%;
            height:74px; background:#fb4102; overflow:hidden }
@@ -313,8 +171,6 @@
   font-size:16px; color:#fff;
 }
 .irc__row--1 .irc__row-txt{ width:447px }
-
-/* ============================ the persona ================================= */
 .irc__persona{ height:479px; background:#0d0f0d }
 .irc__persona .fit-in{ height:479px }
 .irc__card{
@@ -347,15 +203,9 @@
 .irc__persona-body li::before{
   content:"•"; position:absolute; left:7px; top:0;
 }
-
-/* ============================ wireframes ================================== */
-/* 960 × 584: eight cards, several running off the panel's edges exactly as
-   they do in the file, under the design's own vignette. */
 .irc__wires{ height:584px; background:#000 }
 .irc__wires .fit-in{ height:584px }
 .irc__wf{ position:absolute; width:210px; display:block }
-/* left / top / height are the frame clipped to the panel, which is what Figma
-   exports; the numbers below are that clip */
 .irc__wf--1{ left:30px;  top:0px;   height:324.7px }
 .irc__wf--2{ left:260px; top:0px;   height:207.7px }
 .irc__wf--3{ left:30px;  top:346px; height:238px }
@@ -364,12 +214,6 @@
 .irc__wf--6{ left:720px; top:0px;   height:324.7px }
 .irc__wf--7{ left:721px; top:342px; height:242px }
 .irc__wf--8{ left:490px; top:433px; height:151px }
-/* The vignette the design lays over the panel. Figma's background blur is
-   modulated by the layer's own alpha — sharp where the gradient is clear,
-   fully blurred where it is solid — and CSS backdrop-filter is not, so it
-   goes on its own element under the same ramp as a mask. The tint is a
-   second, unblurred layer, which keeps the two effects independent instead
-   of one halving the other. */
 .irc__veil{ position:absolute; inset:0; pointer-events:none }
 .irc__veil > *{ position:absolute; inset:0 }
 .irc__wires .irc__veil-blur{
@@ -383,11 +227,6 @@
   background:radial-gradient(ellipse 647.9px 394.1px at 50% 50%,
              rgba(0,0,0,0) 0%, rgba(0,0,0,.84) 100%);
 }
-
-/* ============================= final UI =================================== */
-/* 960 × 5234: nine screens and the notes against them. The screens are
-   pictures — each export carries its own drop shadow, so it is placed by the
-   offset of the phone body inside that export, not by the export's corner. */
 .irc__final{ height:5234px; background:#0d0f0d }
 .irc__final .fit-in{ height:5234px }
 .irc__screen{ position:absolute; display:block; max-width:none }
@@ -400,8 +239,6 @@
 .irc__screen--passenger{ left:576.8px; top:3036.9px; width:384px }
 .irc__screen--payment  { left:.2px;    top:3784.9px; width:428px }
 .irc__screen--confirmed{ left:588.7px; top:4544.7px; width:371px }
-
-/* a note: the design's 20px dot and the line beside it, 4px apart */
 .irc__ann{ position:absolute; display:flex; align-items:flex-start; gap:4px }
 .irc__ann svg{ width:20px; height:20px; flex:0 0 auto; display:block }
 .irc__ann p{ font-size:16px; color:#fff }
@@ -418,16 +255,6 @@
 .irc__ann--k{ left:352px; top:3841px; width:390px }
 .irc__ann--l{ left:352px; top:3947px; width:472px }
 .irc__ann--m{ left:30px;  top:4785px; width:230px }
-
-/* =========================== design system =============================== */
-/* five boards, three of them running off the frame, under the design's own
-   blurred vignette */
-/* Figma draws this panel 513 tall, the one panel in the file whose lower
-   edge misses a rule — it swallows the line at 13712 and stops eleven
-   pixels short of the next. 509 is the nearest height that closes on a
-   rule, like every other panel here; the four pixels come back as margin
-   below, so nothing after it moves. The board inside keeps its 513 so the
-   specimens sit exactly where the file puts them. */
 .irc__ds{ height:509px; background:#0d0f0d }
 .irc__ds .fit-in{ height:513px }
 .irc__ds-colors    { left:30px;  top:-18px; width:539px;  height:123px }
@@ -457,26 +284,15 @@
              rgba(64,64,64,.2925) 82.804%, rgba(32,32,32,.34125) 91.402%,
              rgba(16,16,16,.36562) 95.701%, rgba(0,0,0,.39) 100%);
 }
-
-/* ========================== the closing note ============================== */
 .irc__close{ position:relative; padding-left:var(--pad); height:147px }
 .irc__close-in{ width:601px; max-width:100% }
 .irc__close p + p{ margin-top:21px }
-/* The sticker is a floating node in the design, over the page's own rules
-   rather than inside the section. Its drawn size is 215.49 × 288.10 — read
-   off Figma's own render of the page, because the box the file reports for it
-   is not the box it paints. */
 .irc__sticker{
   position:absolute; left:693.95px; top:-40.25px;
   width:215.49px; height:288.1px;
   background:none; font-size:0; pointer-events:none;
 }
-
-/* ======================= the gaps the design leaves ======================= */
-/* Read top to bottom this is the page's rhythm: the number is the distance
-   from the bottom of the section above to the top of this one, straight off
-   the Figma frame. */
-.irc__hero                                 { margin-top:61px }   /* 62 → 123 */
+.irc__hero                                 { margin-top:61px }
 .irc__hero            + .band              { margin-top:61px }
 .band                 + .irc__overview     { margin-top:30px }
 .irc__overview        + .irc__plate        { margin-top:80px }
@@ -498,11 +314,6 @@
 .band                 + .irc__ds           { margin-top:61px }
 .irc__ds              + .band              { margin-top:91px }
 .band                 + .irc__close        { margin-top:44px }
-
-/* ------------------------------------------------------- image reveal ----- */
-/* The same arrival the other case studies use: masked to nothing along its
-   own bottom edge, 18px low and transparent, opening upward as it comes into
-   view. The sticker is deliberately not in this set. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference){
   .irc__reveal{
     opacity:0; translate:0 18px;
@@ -522,8 +333,6 @@
                mask-size .62s var(--reveal-ease, ease) var(--d,0ms);
   }
 }
-
-/* =============================== narrow ================================== */
 @media (max-width:1000px){
   .irc__overview{ flex-direction:column; align-items:flex-start; gap:35px;
                   padding-right:var(--pad) }
@@ -531,15 +340,12 @@
   .irc__facts{ width:100%; height:auto }
   .irc__facts-in{ position:static; flex-direction:row; flex-wrap:wrap; gap:16px }
   .irc__fact{ width:254px; max-width:100% }
-
   .irc__lede{ padding-right:var(--pad) }
-  /* the pins come off: below 1000 the text is meant to reflow */
   .irc__overview, .irc__close,
   .irc__lede--research, .irc__lede--pains, .irc__lede--design{ height:auto }
   .irc__lede--research, .irc__lede--pains, .irc__lede--design{ width:auto }
   .irc__lede--research p:not(.irc__h),
   .irc__lede--pains p:not(.irc__h){ width:auto }
-
   .irc__takeaways{ padding-left:0; height:auto; gap:16px }
   .irc__row{ width:100% }
   .irc__row{ height:auto; padding:16px var(--pad) }
@@ -547,10 +353,8 @@
                  box-shadow:none; margin-bottom:8px }
   .irc__row-key b{ position:static; left:auto; white-space:normal }
   .irc__row-txt, .irc__row--1 .irc__row-txt{ position:static; left:auto; width:auto }
-
   .irc__close{ padding-right:var(--pad) }
   .irc__close-in{ width:auto }
-  /* no room beside the text, so the sticker comes back into the flow */
   .irc__sticker{
     position:static; display:block; margin:22px 0 0 auto;
     width:min(215.49px, 46%); height:auto;

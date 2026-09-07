@@ -1,44 +1,5 @@
-/* ==========================================================================
-   FAIR — case study. Figma › FAIR (4006:11081), 1440 × 10014.
-
-   The frame around this page (column, grid, rules, navbar, revealed footer,
-   cursor) is the shell's. Everything here is the page's own content, laid out
-   at the Figma measurements: each section's margin-top is the gap the design
-   leaves above it, so the whole 10014px rhythm is reproduced without pinning
-   anything to an absolute offset.
-
-   Every image the design leaves empty is an olive placeholder carrying its
-   own label — that is how the design itself shows them, in the same colour
-   the home page's ticker cards use.
-   ========================================================================== */
-
-/* The 15px rules run from y 84, so they sit at y = 84 + 15k and the shell's
-   phase for that is 8.
-
-   This was wrong before, and wrong in a way worth writing down. Figma's render
-   of this frame comes back 10007 tall for a frame that is 10014 — the first
-   seven rows are missing — so a rule measured in the render is seven pixels
-   above the same rule's coordinate in the file. Comparing the two spaces made
-   the pattern look seven pixels low and it was "corrected" in the wrong
-   direction, which put every panel's top edge ON a rule instead of one pixel
-   under it, and every panel's lower edge a pixel past the next one.
-
-   The way to read it is to never mix the two spaces. Inside the render alone:
-   the hero slot's top edge is the row immediately after a rule, and the
-   Overview band occupies exactly the 29 rows between one rule and the next,
-   with both rules still showing. That is the convention — panel top on rule+1,
-   panel height one short of a multiple of fifteen — and the file's own
-   coordinates for those two (130 and 580) put the rules they sit under at 129
-   and 579, both of which are 9 past a multiple of fifteen. Hence 84. */
 :root{ --grid-phase:8px }
-
-.fair{ padding-bottom:63px }        /* 181px sits under the last section (9639 → 9820) */
-
-/* ---------------------------------------------------------------- pieces ---
-   Every image slot is a .ph carrying a data-slot name. To drop a real export
-   in, replace the div with an <img> of the same class and slot name:
-       <img class="ph" data-slot="main" src="../../assets/media/main.webp" alt="">
-   and add `object-fit:cover` — the box keeps its Figma size either way.       */
+.fair{ padding-bottom:63px }
 .ph{
   width:100%; height:var(--h,389px);
   background:var(--ticker-card);
@@ -51,40 +12,22 @@
 .ph--tall{ height:524px }
 img.ph{ object-fit:cover }
 .ph--pitch{ position:absolute; inset:0; height:100%;
-             align-content:start; padding-top:46px }   /* clear of the cards */
+             align-content:start; padding-top:46px }
 .ph--thumb{ width:var(--w); height:var(--h);
             background:#1d2b1f; border:1px dashed #3d4a3e; font-size:0 }
-
-/* A real export fills its box. The pitch's top padding and the thumbs' dashed
-   frame exist only so an empty slot reads as a placeholder; with a picture in
-   it they would eat into the picture instead. */
 img.ph--pitch{ padding-top:0 }
 img.ph--thumb{ background:none; border:0; object-fit:contain }
-
-/* A slot filled with an embedded film. The box keeps its Figma size; the
-   frame is given the film's own proportions and blown up until it covers
-   that box, then centred and clipped — the same thing object-fit:cover does
-   for a picture. Sized to the box instead, a 16:9 film in a 959 × 389 slot
-   would sit in the middle with 130px of black down either side.
-
-   --ar is the film's real ratio, which only the player knows; vimeo-fit.js
-   asks for it and sets it here. 16:9 is the standing assumption until then,
-   and for good if the script never runs. */
 .fair__video{ position:relative; overflow:hidden; background:#000 }
 .fair__video iframe{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   width:100%; aspect-ratio:var(--ar, 16 / 9); height:auto;
   min-width:100%; min-height:100%; border:0;
 }
-
-/* the section label band — Figma 4018:340, 960 × 29 on #0d0f0d */
 .band{
   margin-block:0; height:29px; background:#0d0f0d;
   display:flex; align-items:center; padding-left:29px;
   font-family:var(--font-body); font-weight:500; font-size:16px; color:#fff;
 }
-
-/* the two heading scales, both Exposure at 32/38 */
 .fair h3{
   margin:0; font-family:var(--font-display); font-weight:400;
   font-size:32px; line-height:38px; color:#fff; text-wrap:balance;
@@ -93,21 +36,13 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   margin:0; font-family:var(--font-body); font-weight:400;
   font-size:16px; line-height:normal; color:#fff;
 }
-
-/* ------------------------------------------------------------- sections --- */
-.fair__hero-img{ margin-top:68px }                 /* 130 − 62 */
-
+.fair__hero-img{ margin-top:68px }
 .band + .fair__intro{ margin-top:30px }
 .fair__hero-img + .band{ margin-top:61px }
-
-/* the meta cards are placed absolutely, so the section is given the height
-   their column needs (639 → 939) or the next gap would start too early */
 .fair__intro{ position:relative; padding-left:var(--pad); height:300px }
 .fair__intro-copy{ width:767px; max-width:100% }
 .fair__lede{ max-width:767px }
 .fair__intro-copy p{ margin-top:28px; width:604px; max-width:100% }
-
-/* the Role / Focus pair — Figma 4035:543, 254 × 89 cards on #0d0f0d */
 .fair__meta{
   position:absolute; left:675px; top:91px; margin:0;
   display:flex; flex-direction:column; gap:31px;
@@ -124,26 +59,14 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   font-family:var(--font-body); font-weight:300; font-size:14px;
   color:rgba(255,255,255,.6);
 }
-
 .fair__slot{ margin-top:136px }
-/* Each block is given the height the Figma frame has. Without that, a line of
-   text wrapping differently here than it does in Figma shifts everything below
-   it, and by the foot of a 10,000px page the error is over 100px. */
 .fair__say{ margin-top:75px; padding-left:var(--pad); height:139px }
 .fair__say h3{ width:731px; max-width:100% }
 .fair__say p{ margin-top:21px; width:731px; max-width:100% }
 .fair__say--wide{ height:184px }
-/* the one that is a heading on its own, with no paragraph under it */
 .fair__say--head{ height:76px }
 .fair__say--wide h3,.fair__say--wide p{ width:674px }
-
-/* --- match → data → analysis → insight ------------------------------------
-   Figma 4049:769 / 4040:706 / 4049:788 / 4049:797. The panels are the
-   product's own green — #142116 behind a #363f36 hairline, lit from inside by
-   two inset shadows — and thin strokes carry the eye from one to the next.
-   Positions are the Figma x/y, relative to the column's left edge.          */
 .fair__flow{ margin-top:72px; position:relative; height:284px }
-
 .fair__panel,.fair__node,.fair__chips{
   background:#142116; border:1px solid #363f36;
   box-shadow:inset 0 -2px 7.3px rgba(0,0,0,.25), inset 0 3px 15.2px rgba(0,0,0,.8);
@@ -156,56 +79,30 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   font-family:var(--font-body); font-weight:500; font-size:14px;
   color:#fff; text-align:center;
 }
-.fair__node--match  { left:31px;  top:0 }      /* x 271 → col + 31, y 1751 */
-.fair__node--ai     { left:556px; top:150px }  /* x 796, y 1901            */
-.fair__node--insight{ left:735px; top:150px }  /* x 975, y 1901            */
-
+.fair__node--match  { left:31px;  top:0 }
+.fair__node--ai     { left:556px; top:150px }
+.fair__node--insight{ left:735px; top:150px }
 .fair__chips{
-  position:absolute; z-index:1; left:31px; top:195px;   /* x 271, y 1946 */
+  position:absolute; z-index:1; left:31px; top:195px;
   width:464px; height:59px; box-sizing:border-box;
   margin:0; padding:10px 16px; list-style:none;
-  /* The six labels are set out edge to edge inside the panel; space-between
-     keeps the last one off the border whatever the fallback font measures. */
   display:flex; align-items:center; justify-content:space-between; gap:12px;
   font-family:var(--font-body); font-weight:400; font-size:14px; color:#fff;
 }
 .fair__chips li{ white-space:nowrap }
-
-/* Figma 4049:787 / 792 / 801. These aren't flat hairlines in the panel-border
-   grey — each is a 1px stroke that fades in along its own direction: nothing
-   at the element it leaves, full #00d800 at the element it points to, so the
-   three of them read as one current running match → data → AI → insight.
-   The ramp is a straight alpha ramp of rgb(0,216,0), sampled off the Figma
-   render pixel by pixel (24 → 216 in the green channel over 60px).
-
-   A charge then runs the chain — down out of the match panel, across to AI
-   analysis, on to insights — and the next one sets off behind it. The pulse is
-   its own element rather than a second background layer: that lets it be
-   thicker than the 1px stroke it rides on and carry a real glow, and it moves
-   on `transform`, which the compositor handles without repainting the line.
-   All three share one 2.4s timeline and travel only during their own third of
-   it, parked off the end the rest of the time, so the relay keeps step without
-   three delays to hold in sync. */
-/* The charge is wider than the 1px stroke and its glow wider still, so at each
-   end it reaches over the panel it is leaving or arriving at. The wires come
-   last in the markup and would paint on top of them; this puts the panels
-   above instead, and the charge slides under the panel it feeds. */
 .fair__wire{ position:absolute; z-index:0; display:block }
 .fair__wire--down{
-  left:91px;  top:134px; width:1px;  height:60px;                       /* x 331, y 1885 */
+  left:91px;  top:134px; width:1px;  height:60px;
   background:linear-gradient(to bottom, rgba(0,216,0,0), rgb(0,216,0));
 }
 .fair__wire--right-a{
-  left:496px; top:224px; width:60px; height:1px;                        /* x 736, y 1975 */
+  left:496px; top:224px; width:60px; height:1px;
   background:linear-gradient(to right, rgba(0,216,0,0), rgb(0,216,0));
 }
 .fair__wire--right-b{
-  left:675px; top:224px; width:60px; height:1px;                        /* x 915, y 1975 */
+  left:675px; top:224px; width:60px; height:1px;
   background:linear-gradient(to right, rgba(0,216,0,0), rgb(0,216,0));
 }
-
-/* the travelling charge: 3px across the 1px stroke, 26px long, with the glow
-   carried on two box-shadows — a tight bright one and a wide soft one */
 .fair__wire::after{
   content:""; position:absolute; border-radius:2px;
   pointer-events:none; will-change:transform;
@@ -214,20 +111,17 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
 .fair__wire--down::after{
   left:-1px; top:0; width:3px; height:26px;
   background:linear-gradient(to bottom, rgba(0,216,0,0), rgb(216,255,216) 50%, rgba(0,216,0,0));
-  transform:translateY(-26px);                    /* resting: clear of the top */
+  transform:translateY(-26px);
   animation:fair-charge-down 2.4s linear infinite;
 }
 .fair__wire--right-a::after,
 .fair__wire--right-b::after{
   top:-1px; left:0; width:26px; height:3px;
   background:linear-gradient(to right, rgba(0,216,0,0), rgb(216,255,216) 50%, rgba(0,216,0,0));
-  transform:translateX(-26px);                    /* resting: clear of the left */
+  transform:translateX(-26px);
 }
 .fair__wire--right-a::after{ animation:fair-charge-a 2.4s linear infinite }
 .fair__wire--right-b::after{ animation:fair-charge-b 2.4s linear infinite }
-
-/* -26px and 60px both put the charge clear of the stroke, so a wire waiting
-   its turn shows only the resting ramp. */
 @keyframes fair-charge-down{
   0%      { transform:translateY(-26px) }
   33.333% { transform:translateY(60px) }
@@ -244,33 +138,13 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   66.666% { transform:translateX(-26px) }
   100%    { transform:translateX(60px) }
 }
-/* the stroke alone is the design as drawn, so the charge simply goes */
 @media (prefers-reduced-motion:reduce){ .fair__wire::after{ display:none } }
-
 .fair__flow + .band{ margin-top:136px }
 .band + .fair__say--wide{ margin-top:45px }
-
-/* --- two screens side by side --------------------------------------------- */
-/* Figma 4049:951 — the pair doesn't sit loose on the page: it sits on a
-   960 × 479 panel in #0d0f0d (the same near-black the section labels use),
-   which shows as a 21px band above and below the screens and in the 24px
-   channel between them. The panel starts at y2516, the screens at y2537. */
 .fair__pair{ margin-top:87px; padding:21px 0; background:#0d0f0d;
              display:flex; gap:24px; min-height:437px }
-/* Every heading on this page starts on a rule, so its baseline lands 29–30px
-   under one: measured off the Figma render, "Designing a better way" 30,
-   "Football produces" 30, "The challenge wasn't" 30, "Clarity first" 29,
-   "Football first" 29, "AI with context" 29. This one alone was 38, because
-   in the Figma file its text box sits at y3086 while the rule is at 3077 —
-   nine pixels off the grid every other heading is on. Pulled back onto it,
-   and the nine given to the section below so nothing else moves. */
-/* 90, not the file's 89: this is where the pixel taken off the product
-   film above is handed back, so everything from the principles down keeps
-   the position it already had on the rules. */
 .fair__pair + .fair__say--wide{ margin-top:90px }
 .fair__pair .ph{ width:468px; flex:1 1 0 }
-
-/* --- the three principles over the pitch ---------------------------------- */
 .fair__principles{ margin-top:60px; position:relative; height:524px }
 .fair__cards{
   position:absolute; left:30px; top:173px; width:899px;
@@ -279,9 +153,6 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
 .fair__cards article{
   width:279px; padding:24px 15px; border-radius:12px;
   background:rgba(20,24,20,.42);
-  /* the pitch reads blurred under the cards in the Figma render; with a flat
-     placeholder behind it there is nothing to blur yet, but it is here so the
-     cards look right the moment the photograph goes in */
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
 .fair__cards h4{
@@ -289,37 +160,29 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   font-size:18px; line-height:normal; color:#fff;
 }
 .fair__cards p{ font-weight:300 }
-
 .fair__principle-head{ margin-top:120px; padding-left:var(--pad); height:38px }
 .fair__principle-head h3{ width:632px; max-width:100% }
 .fair__principle-head--body{ margin-top:75px; height:122px }
 .fair__principle-head--body p{ margin-top:21px; width:632px; max-width:100% }
-
-/* --- the four-row breakdown — Figma 4446:1406, rows 899 × 74 on a 105 pitch */
 .fair__rows{ margin-top:53px; padding-left:30px }
 .fair__row{
   position:relative; height:74px; width:899px; max-width:100%;
   display:flex; align-items:center;
-  background:var(--bg);          /* Figma fills each row, masking the grid */
+  background:var(--bg);
 }
 .fair__row + .fair__row{ margin-top:31px }
 .fair__row span{
   width:255px; flex:none; padding-left:36px;
   font-family:var(--font-body); font-weight:600; font-size:16px; color:#fff;
-  /* the same pair the column rules use: the stroke, its shadow one px off */
   border-right:1px solid #2b2b2b; box-shadow:1px 0 0 0 #000;
   height:100%; display:flex; align-items:center;
 }
 .fair__row p{ padding-left:36px; width:465px; max-width:100% }
-
 .fair__rows + .fair__slot{ margin-top:121px }
 .fair__principle-head--body + .fair__slot{ margin-top:59px }
-
-/* --- a captioned product screen ------------------------------------------- */
 .fair__screen{ margin-top:74px }
 .fair__screen .ph{ margin-top:59px }
 .fair__screen .fair__caption{ height:63px }
-/* the first caption runs to two lines in the design, not three */
 .fair__screen--short .fair__caption{ height:42px }
 .fair__screen--short .ph{ margin-top:50px }
 .fair__slot + .fair__screen{ margin-top:104px }
@@ -328,23 +191,10 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   font-weight:300;
 }
 .fair__caption b{ font-weight:600 }
-
 .fair__screen + .band{ margin-top:121px }
-
-/* --- results --------------------------------------------------------------- */
 .fair__results{ margin-top:59px; position:relative; min-height:451px }
-/* the Figma frame is 470 wide and starts one --pad in from the column, so the
-   width here carries the padding with it — otherwise the lede wraps early */
 .fair__results-copy{ width:calc(470px + var(--pad)); max-width:100%; padding-left:var(--pad) }
-/* `.fair p` also sets the weight and outranks a lone class, so this has to
-   carry the element too or the lede quietly renders at 400 */
 .fair p.fair__results-lede{ font-weight:500; line-height:21px }
-
-/* Figma 4471:1702, measured off the render: the lede's line box ends at 21
-   and the list's first line box starts at 75, so 54 between them; inside the
-   list the lines are 21 apart and the results 42 (the design leaves two empty
-   lines between them). The marker is a 4px dot at x10 with the text column at
-   x25 — 15px back from the text, centred on the first line. All of it #fff. */
 .fair__results-list{
   margin:54px 0 0; padding:0 0 0 25px; list-style:none;
   width:442px; max-width:100%;
@@ -359,13 +209,9 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   content:""; position:absolute; left:-15px; top:9px;
   width:4px; height:4px; border-radius:50%; background:currentColor;
 }
-
-/* Figma 4469:1663 — a 404 × 449 cluster sitting on a soft radial glow, the
-   photographs scattered over it. The spring in shell.js reads each one's
-   centre and resting tilt off the element. */
 .fair__photos{
   position:absolute; left:526px; top:2px; width:404px; height:449px;
-  overflow:hidden;                 /* the Figma frame clips them; mine did not */
+  overflow:hidden;
   background:radial-gradient(ellipse 202px 225px at 50% 50%,
     #6a6a6a 0%, #545554 25%, #3f413f 50%, #292c29 75%, #141814 100%);
 }
@@ -382,21 +228,14 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   font-family:var(--font-body); font-weight:300; font-size:12px;
   color:rgba(255,255,255,.45);
 }
-/* the photograph fills the frame the polaroid draws */
 .polaroid img{
   width:100%; height:100%; object-fit:cover; display:block; border-radius:4px;
 }
-
-/* ------------------------------------------------------------ responsive --- */
 @media (max-width:1000px){
-  /* the Figma heights are a desktop measurement — narrower columns wrap the
-     same copy into more lines, so the blocks go back to sizing themselves */
   .fair__intro,.fair__say,.fair__say--wide,.fair__say--head,
   .fair__principle-head,.fair__principle-head--body,
   .fair__caption,.fair__screen--short .fair__caption{ height:auto }
-
   .fair h3{ font-size:clamp(24px,4.2vw,32px); line-height:1.2 }
-  /* the design's line break is a desktop measurement — let it rewrap */
   .fair__break{ display:none }
   .fair__results-list{ width:auto }
   .fair__intro{ padding-left:0 }
@@ -409,8 +248,6 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   .fair__pair .ph{ width:100%; height:min(60vw,437px) }
   .ph--hero,.ph--wide{ height:min(46vw,449px) }
   .ph--tall{ height:min(54vw,524px) }
-
-  /* the flow and the principles stop being absolute placements */
   .fair__flow{ height:auto; display:flex; flex-wrap:wrap;
                align-items:flex-end; gap:20px }
   .fair__node{ position:static }
@@ -424,8 +261,6 @@ img.ph--thumb{ background:none; border:0; object-fit:contain }
   .fair__row{ height:auto; flex-direction:column; align-items:flex-start; gap:8px }
   .fair__row span{ width:auto; padding-left:0; border:0; box-shadow:none; height:auto }
   .fair__row p{ padding-left:0; width:auto }
-
-  /* the photographs go under the writing, scaled to fit */
   .fair__results{ min-height:0 }
   .fair__photos{ position:relative; left:auto; top:auto; margin:36px auto 0;
                  transform-origin:top center }

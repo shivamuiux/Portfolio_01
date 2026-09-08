@@ -139,6 +139,14 @@ stylesheet, driven by `data-mode` / `data-prev` / `data-press` on the button.
 Every length is in `em` against its own 14px, so the shadows, the cap plate and
 the specular streak rescale together instead of being blurred by a transform.
 
+The pill does not move on hover. It used to rise a pixel, and since the label
+is centred in the pill the word rose with it — "Contact" at y 31, "Email" at
+y 30 — so the word appeared to hop as it changed. A pixel is invisible on a
+wide surface and plainly visible under a 14px word. The deeper shadow and the
+brighter cap say the pointer is there instead, which is also the only thing the
+two variants in the file differ by. The press keeps its own downward nudge,
+because that one is meant to be felt.
+
 The clipboard write tries `navigator.clipboard` first and falls back to a
 hidden textarea for contexts that refuse it — an insecure origin, or an older
 browser. If both fail the button shows the address itself rather than claiming
@@ -268,8 +276,12 @@ work page is where it can be reached.
 
 ## Work
 
-`/work/` — all eight projects, reached from the `work` link in the middle of
-the navbar, which every page now carries.
+`/work/` — all eight projects, reached from the **Work** link in the middle of
+the navbar, which every page now carries. It is set as the file sets it
+(3963:10844 / 4658:1556): Geist Medium at the full `#d1cdb4`, so the hover and
+the current page go to white rather than the other way round. On the work page
+itself the link carries `aria-current="page"`, which build.py adds — it is the
+one page where the link points at where you already are.
 
 The cards are the home page's component, not a copy of it: `cards.css` and
 `cards.js` moved into the shell, so both pages get the same deck, the same fan
